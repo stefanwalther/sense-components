@@ -1,0 +1,22 @@
+{
+  "name": "widget-components",
+  "description": "Components to be used in Widgets in Qlik Sense.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/stefanwalther/widget-components",
+  "author": "Stefan Walther (http://qliksite.io)",
+  "repository": "stefanwalther/widget-components",
+  "bugs": {
+    "url": "https://github.com/stefanwalther/widget-components/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "components",
+    "widget"
+  ]
+}
