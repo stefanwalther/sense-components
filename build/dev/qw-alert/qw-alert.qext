@@ -1,0 +1,7 @@
+{
+  "name": "qw-alert",
+  "description": "Alert component for widgets",
+  "type": "component",
+  "version": 1,
+  "author": "Qlik"
+}

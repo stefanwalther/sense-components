@@ -1,0 +1,82 @@
+.cmp-alert {
+	border-left: 4px solid #000000;
+	margin: 2px;
+	padding-left: 20px;
+	background-color: #F2F2F2;
+	color: #000000;
+	flex: 0 0 40px;
+	display: flex;
+}
+
+.cmp-alert .msg {
+	float: left;
+	color: #000000;
+	line-height: 40px;
+	overflow: hidden;
+	width: 80%;
+	height: 40px;
+	flex: 1 1 auto;
+}
+
+.cmp-alert .close-icon {
+	color: #000000;
+	line-height: 40px;
+	cursor: pointer;
+	padding-right: 13px;
+}
+
+.cmp-alert.cmp-alert-success {
+	border-left: 4px solid #3C763D;
+	background-color: #DFF0D8;
+	color: #3C763D;
+}
+
+.cmp-alert.cmp-alert-success .msg {
+	color: #3C763D;
+}
+
+.cmp-alert.cmp-alert-success .close-icon {
+	color: #3C763D;
+}
+
+.cmp-alert.cmp-alert-info {
+	border-left: 4px solid #31708F;
+	background-color: #D9EDF7;
+	color: #31708F;
+}
+
+.cmp-alert.cmp-alert-info .msg {
+	color: #31708F;
+}
+
+.cmp-alert.cmp-alert-info .close-icon {
+	color: #31708F;
+}
+
+.cmp-alert.cmp-alert-warning {
+	border-left: 4px solid #A67A45;
+	background-color: #FCF8E3;
+	color: #A67A45;
+}
+
+.cmp-alert.cmp-alert-warning .msg {
+	color: #A67A45;
+}
+
+.cmp-alert.cmp-alert-warning .close-icon {
+	color: #A67A45;
+}
+
+.cmp-alert.cmp-alert-danger {
+	border-left: 4px solid #A94442;
+	background-color: #F2DEDE;
+	color: #A94442;
+}
+
+.cmp-alert.cmp-alert-danger .msg {
+	color: #A94442;
+}
+
+.cmp-alert.cmp-alert-danger .close-icon {
+	color: #A94442;
+}
