@@ -18,11 +18,16 @@
 	flex: 1 1 auto;
 }
 
+/* Todo: We have to clean this style a bit ... easier as we have a .less statement */
+/* Todo: The hover color must be a good contrast, use less' function @contrast for that */
 .qw-alert .close-icon {
 	color: #000000;
 	line-height: 40px;
 	cursor: pointer;
 	padding-right: 13px;
+	opacity: 0.4;
+	margin: -8px; /* what a hack ... just for now */
+	font-size: 1em;
 }
 
 .qw-alert.qw-alert-default {
