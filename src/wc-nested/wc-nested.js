@@ -4,6 +4,14 @@ define( [
 ], function ( qvangular ) {
 	'use strict';
 
+	/**
+	 * @example
+	 *
+	 * <wc-nested>
+	 *     <wc-nested-item></wc-nested-item>
+	 *     <wc-nested-item></wc-nested-item>
+	 * </wc-nested>
+	 */
 	qvangular.directive( 'wcNestedItem', function () {
 		return {
 			restrict: 'E',
