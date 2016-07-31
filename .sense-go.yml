@@ -9,6 +9,50 @@ deployment:
     password: "Test1234"
     dest: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/widget-components"
 
+# -------------------------------------------------------------------------------
+# Custom task chain
+# --
+# The only difference to the default task-chains is that less:each is used instead
+# of less:reduce
+# -------------------------------------------------------------------------------
+taskChains:
+  - "build":
+    - "clean:tmp"
+    - "copy:toTmp"
+    - "import"
+    - "less:each"
+    - "replace:tmp"
+    - "wbfolder:tmp"
+    - "clean:tmpIllegal"              #clean illegal files
+    - "jsonlint:tmp"
+    - "htmlmin:tmp"
+    - "clean:buildDev"
+    - "copy:tmpToDev"
+    - "zip:dev"
+    - "clean:localExtensionDir"
+    - "deploy:toLocal"
+    - "deploy:toSsh"
+    - "clean:tmp"
+  - "release":
+    - "clean:tmp"
+    - "copy:toTmp"
+    - "import"
+    - "less:each"
+    - "replace:tmp"
+    # - "wbfolder:tmp" ==> doesn"t make sense since the uglified files cannot really be edited in Dev-Hub
+    - "uglify:tmp"
+    # - //"copy:tmpMeta" ==> upload to QRS does not work
+    - "clean:tmpIllegal"
+    - "jsonlint:tmp"
+    - "htmlmin:tmp"
+    - "minify:json:tmp"
+    - "clean:buildRelease"
+    - "copy:tmpToRelease"
+    - "zip:release"
+    - "zip:latest"
+    - "clean:localExtensionDir"
+    - "deploy:toLocal"
+    - "clean:tmp"
 
 # Task settings
 htmlmin:

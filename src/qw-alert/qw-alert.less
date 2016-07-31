@@ -1,0 +1,101 @@
+.qw-alert {
+	border-left: 4px solid #000000;
+	margin: 2px;
+	padding-left: 20px;
+	background-color: #F2F2F2;
+	color: #000000;
+	flex: 0 0 40px;
+	display: flex;
+
+	.msg {
+		float: left;
+		color: #000000;
+		line-height: 40px;
+		overflow: hidden;
+		width: 80%;
+		height: 40px;
+		flex: 1 1 auto;
+	}
+
+	// Todo: We have to clean this style a bit ... easier as we have a .less statement
+	// Todo: The hover color must be a good contrast, use less function @contrast for that
+	.close-icon {
+		color: #000000;
+		line-height: 40px;
+		cursor: pointer;
+		padding-right: 13px;
+		opacity: 0.4;
+		margin: -8px; /* what a hack ... just for now */
+		font-size: 1em;
+	}
+
+	&.qw-alert-default {
+		background-color:#efefef;
+		color:#666;
+		border-left: 4px solid #666;
+
+		.msg {
+			color: #666;
+		}
+
+		.close-icon {
+			color: #666;
+		}
+	}
+
+	&.qw-alert-success {
+		border-left: 4px solid #3C763D;
+		background-color: #DFF0D8;
+		color: #3C763D;
+
+		.msg {
+			color: #3C763D;
+		}
+
+		.close-icon {
+			color: #3C763D;
+		}
+	}
+
+	&.qw-alert-info {
+		border-left: 4px solid #31708F;
+		background-color: #D9EDF7;
+		color: #31708F;
+
+		.msg {
+			color: #31708F;
+		}
+
+		.close-icon {
+			color: #31708F;
+		}
+	}
+
+	&.qw-alert-warning {
+		border-left: 4px solid #A67A45;
+		background-color: #FCF8E3;
+		color: #A67A45;
+
+		.msg {
+			color: #A67A45;
+		}
+
+		.close-icon {
+			color: #A67A45;
+		}
+	}
+
+	&.qw-alert-danger {
+		border-left: 4px solid #A94442;
+		background-color: #F2DEDE;
+		color: #A94442;
+
+		.msg {
+			color: #A94442;
+		}
+
+		.close-icon {
+			color: #A94442;
+		}
+	}
+}
