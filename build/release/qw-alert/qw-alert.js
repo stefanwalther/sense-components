@@ -4,11 +4,23 @@
  */
 define( [
 	"jquery",
+	"underscore",
 	"text!./qw-alert.ng.html",
 	"css!./qw-alert.css"
-], function ( $, template ) {
+], function ( $, _, template ) {
 	'use strict';
 
+	/**
+	 *
+	 * @usage
+	 *
+	 * <qw-alert closable="true" auto-close-after="10">This is the alert message</qw-alert>
+	 *
+	 * @todo
+	 * - Error handling in case autoCloseAfter is not a numeric value
+	 * - Convert the .css to a .less file
+	 *
+	 */
 	return {
 		name: "qwAlert",
 		restrict: 'E',
@@ -17,14 +29,16 @@ define( [
 		template: template,
 		scope: {
 			closable: "=",
-			closeOnTimeout: "="
+			autoCloseAfter: "=",
+			design: "@"
 		},
 		link: function ( scope, element ) {
-			if ( scope.closeOnTimeout ) {
+			if ( scope.autoCloseAfter && _.isNumber(scope.autoCloseAfter) && scope.autoCloseAfter > 0 ) {
 				setTimeout( function () {
 					scope.onClose();
-				}, scope.closeOnTimeout );
+				}, parseInt(scope.autoCloseAfter) );
 			}
+
 
 			scope.onClose = function () {
 				element.remove();

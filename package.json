@@ -18,5 +18,20 @@
   "keywords": [
     "components",
     "widget"
-  ]
+  ],
+  "verb": {
+    "run": true,
+    "toc": {
+      "render": true,
+      "method": "preWrite",
+      "maxdepth": 2
+    },
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ]
+  }
 }

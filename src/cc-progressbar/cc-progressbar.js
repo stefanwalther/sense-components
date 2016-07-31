@@ -70,7 +70,7 @@ define( [
 	 * @usage:
 	 */
 	var component = {
-		name: "wcProgressbar",
+		name: "ccProgressbar",
 		restrict: 'E',
 		replace: true,
 		transclude: true,
@@ -101,24 +101,24 @@ define( [
 		}
 	};
 
-	qvangular.directive( 'wcProgressbarProgress', function () {
+	qvangular.directive( 'ccProgress', function () {
 		return {
 			restrict: 'E',
 			replace: true,
 			transclude: true,
 			controller: ["$scope", "$attrs", ProgressController],
-			require: 'wcProgressbarProgress',
+			require: 'ccProgress',
 			scope: {},
 			template: ngProgress
 		};
 	} );
 
-	qvangular.directive( 'wcProgressbarBar', function () {
+	qvangular.directive( 'ccBar', function () {
 		return {
 			restrict: 'E',
 			replace: true,
 			transclude: true,
-			require: '^wcProgressbarProgress',
+			require: '^ccProgress',
 			scope: {
 				value: '=',
 				design: '@'
