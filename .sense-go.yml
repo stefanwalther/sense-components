@@ -8,3 +8,10 @@ deployment:
     username: "stefanwalther"
     password: "Test1234"
     dest: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/widget-components"
+
+
+# Task settings
+htmlmin:
+  collapseWhitespace: true
+  preserveLineBreaks: false
+  removeComments: true
