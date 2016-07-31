@@ -4,9 +4,10 @@
  */
 define( [
 	"jquery",
+	"underscore",
 	"text!./qw-alert.ng.html",
 	"css!./qw-alert.css"
-], function ( $, template ) {
+], function ( $, _, template ) {
 	'use strict';
 
 	/**
@@ -32,7 +33,7 @@ define( [
 			design: "@"
 		},
 		link: function ( scope, element ) {
-			if ( scope.autoCloseAfter ) {
+			if ( scope.autoCloseAfter && _.isNumber(scope.autoCloseAfter) && scope.autoCloseAfter > 0 ) {
 				setTimeout( function () {
 					scope.onClose();
 				}, parseInt(scope.autoCloseAfter) );
