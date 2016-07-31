@@ -15,6 +15,10 @@ define( [
 	 *
 	 * <qw-alert closable="true" auto-close-after="10">This is the alert message</qw-alert>
 	 *
+	 * @todo
+	 * - Error handling in case autoCloseAfter is not a numeric value
+	 * - Convert the .css to a .less file
+	 *
 	 */
 	return {
 		name: "qwAlert",
@@ -24,14 +28,16 @@ define( [
 		template: template,
 		scope: {
 			closable: "=",
-			autoCloseAfter: "="
+			autoCloseAfter: "=",
+			design: "@"
 		},
 		link: function ( scope, element ) {
 			if ( scope.autoCloseAfter ) {
 				setTimeout( function () {
 					scope.onClose();
-				}, scope.autoCloseAfter );
+				}, parseInt(scope.autoCloseAfter) );
 			}
+
 
 			scope.onClose = function () {
 				element.remove();
