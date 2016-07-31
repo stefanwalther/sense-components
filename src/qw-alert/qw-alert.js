@@ -9,6 +9,13 @@ define( [
 ], function ( $, template ) {
 	'use strict';
 
+	/**
+	 *
+	 * @usage
+	 *
+	 * <qw-alert closable="true" auto-close-after="10">This is the alert message</qw-alert>
+	 *
+	 */
 	return {
 		name: "qwAlert",
 		restrict: 'E',
@@ -17,13 +24,13 @@ define( [
 		template: template,
 		scope: {
 			closable: "=",
-			closeOnTimeout: "="
+			autoCloseAfter: "="
 		},
 		link: function ( scope, element ) {
-			if ( scope.closeOnTimeout ) {
+			if ( scope.autoCloseAfter ) {
 				setTimeout( function () {
 					scope.onClose();
-				}, scope.closeOnTimeout );
+				}, scope.autoCloseAfter );
 			}
 
 			scope.onClose = function () {
