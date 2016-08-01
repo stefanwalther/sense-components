@@ -13,17 +13,15 @@
 
 ***Result:***
 
-> ![](docs/images/component_wiProgressbar_BasicExample.png)
+![](docs/images/component_wiProgressbar_BasicExample.png)
 
 
 ### Properties
 
-`sc-progressbar` is only available as an Html-element not as an attribute.
-
-* **`max`** - A number that specifies the total value of bars that is required. *(Default: 100)*
-* **`value`** - The current value of progress completed. 
-* **`design`** - Chosen design. Possible values are `primary`, `info`, `success`, `warning`, `danger`, `inverse` *(Default: null)*
-* **`animate`** - Whether bars use transitions to achieve the width change. *(Default: true)*
+* **`max`** *{number}* - A number that specifies the total value of bars that is required. *(Default: 100)*
+* **`value`**  *{number}* - The current value of progress completed. 
+* **`type`** *{string}* - Chosen design. Possible values are `primary`, `info`, `success`, `warning`, `danger`, `inverse` *(Default: null)*
+* **`animate`** *{boolean}* - Whether bars use transitions to achieve the width change. *(Default: true)*
 
 #### Example Using All Properties
 

@@ -1,12 +1,12 @@
 {
-  "name": "widget-components",
-  "description": "Components to be used in Widgets in Qlik Sense.",
+  "name": "sense-components",
+  "description": "Components to be used (in Widgets) in Qlik Sense.",
   "version": "0.1.1",
-  "homepage": "https://github.com/stefanwalther/widget-components",
-  "author": "Stefan Walther (http://qliksite.io)",
-  "repository": "stefanwalther/widget-components",
+  "homepage": "https://github.com/stefanwalther/sense-components",
+  "author": "Stefan Walther (https://github.com/stefanwalther)",
+  "repository": "stefanwalther/sense-components",
   "bugs": {
-    "url": "https://github.com/stefanwalther/widget-components/issues"
+    "url": "https://github.com/stefanwalther/sense-components/issues"
   },
   "license": "MIT",
   "engines": {
@@ -26,12 +26,23 @@
       "method": "preWrite",
       "maxdepth": 2
     },
+    "twitter": "waltherstefan",
     "layout": "empty",
     "tasks": [
       "readme"
     ],
     "plugins": [
       "gulp-format-md"
+    ],
+    "related": {
+      "list": []
+    },
+    "reflinks": [
+      "verb",
+      "verb-generate-readme"
     ]
+  },
+  "devDependencies": {
+    "gulp-format-md": "^0.1.9"
   }
 }
