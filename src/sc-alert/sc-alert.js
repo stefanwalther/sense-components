@@ -1,8 +1,8 @@
 define( [
 	"jquery",
 	"underscore",
-	"text!./cc-alert.ng.html",
-	"css!./cc-alert.css"
+	"text!./sc-alert.ng.html",
+	"css!./sc-alert.css"
 ], function ( $, _, template ) {
 	'use strict';
 
@@ -14,7 +14,7 @@ define( [
 	 *
 	 */
 	return {
-		name: "ccAlert",
+		name: "scAlert",
 		restrict: 'E',
 		replace: true,
 		transclude: true,
