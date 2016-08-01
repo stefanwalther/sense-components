@@ -24,7 +24,7 @@ define( [], function () {
 			restrict: 'E',
 			transclude: true,
 			template: '<div>i am a outer<div ng-transclude></div>(end of outer)</div>',
-			controller: function ( $scope ) {
+			controller: function ( /*$scope*/ ) {
 				this.addItem = function ( val ) {
 					console.log( val );
 				}

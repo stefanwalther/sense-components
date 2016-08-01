@@ -35,8 +35,8 @@ define( [
 
 	var ProgressController = BaseController.extend( {
 		init: function ( $scope, $attrs ) {
-			var self = this,
-				animate = angular.isDefined( $attrs.animate ) ? $scope.$parent.$eval( $attrs.animate ) : config.animate;
+			var self = this;
+			var animate = angular.isDefined( $attrs.animate ) ? $scope.$parent.$eval( $attrs.animate ) : config.animate;
 
 			this.bars = [];
 			$scope.max = angular.isDefined( $attrs.max ) ? $scope.$parent.$eval( $attrs.max ) : config.max;

@@ -11,10 +11,10 @@ define( [
 			// Add a inline style to the html-header (with a given Id),
 			// If the style already exists the existing one will be changed
 			addStyleToHeader: function ( id, css ) {
-				var idPattern = 'qwidget_' + id;
+				var idPattern = 'style_' + id;
 				var $headStyle = $( '#' + idPattern );
 				if ( $headStyle.length === 0 ) {
-					// add the style
+					// add the style element
 					$headStyle = $( document.createElement( 'style' ) );
 					$headStyle.attr( 'type', 'text/css' );
 					$headStyle.attr( 'id', idPattern );
@@ -36,7 +36,7 @@ define( [
 
 				$( document ).ready( function () {
 
-					var idPattern = 'wiStyleLinked_' + key;
+					var idPattern = 'linked_style_' + key;
 					if ( $( '#' + idPattern ).length === 0 ) {
 						var $lnk = $( document.createElement( 'link' ) );
 						$lnk.attr( 'rel', 'stylesheet' );
