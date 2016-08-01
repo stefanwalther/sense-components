@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "flatpickr": "^1.9.1",
     "gulp-format-md": "^0.1.9"
   }
 }

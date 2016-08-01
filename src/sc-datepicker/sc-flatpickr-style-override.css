@@ -1,0 +1,14 @@
+.flatpickr-calendar {
+	font-family: sans-serif !important;
+	font-size: 13.5px !important;
+}
+
+.flatpickr-current-month .cur_year{
+	font-size:15px !important;
+	width:55px !important;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+	font-size: 16px;
+}

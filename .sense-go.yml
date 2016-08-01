@@ -60,10 +60,18 @@ deployment:
     port: 22
     username: "stefanwalther"
     password: "Test1234"
-    dest: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/widget-components"
+    dest: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/sense-components"
   toLocal:
     enabled: false
     pathFetching: false
     localExtensionsBaseDir:
     extensionDirOverride:
+
+# -------------------------------------------------------------------------------
+# Import settings
+# -------------------------------------------------------------------------------
+import:
+  files:
+    - ["./node_modules/flatpickr/dist/flatpickr.min.js", "./.tmp/sc-datepicker/external/flatpickr/"]
+    - ["./node_modules/flatpickr/dist/flatpickr.min.css", "./.tmp/sc-datepicker/external/flatpickr/"]
 
