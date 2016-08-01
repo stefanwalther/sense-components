@@ -31,7 +31,6 @@ define( [
 				}, parseInt(scope.autoCloseAfter) );
 			}
 
-
 			scope.onClose = function () {
 				element.remove();
 			};
