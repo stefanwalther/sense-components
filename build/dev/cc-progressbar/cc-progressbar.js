@@ -29,7 +29,7 @@ define( [
 
 	// Default Values
 	var config = {
-		animate: true,
+		animate: false,
 		max: 100
 	};
 
@@ -66,43 +66,40 @@ define( [
 
 	/**
 	 * wc-progressbar component.
-	 *
-	 * @usage:
 	 */
-	var component = {
-		name: "ccProgressbar",
-		restrict: 'E',
-		replace: true,
-		transclude: true,
-		controller: ["$scope", "$attrs", ProgressController],
-		scope: {
-			value: '=',
-			design: '@'
+	var components = [
+		{
+			name: "ccProgressbar",
+			restrict: 'E',
+			replace: true,
+			transclude: true,
+			controller: ["$scope", "$attrs", ProgressController],
+			scope: {
+				value: '=',
+				design: '@'
+			},
+			template: ngProgressbar,
+			compile: function ( element, attributes, transclude ) {
+
+				// Todo: Just load within another compoment, would be cleaner ...
+				utils.addStyleToHeader( 'wcBootstrap', cssBootstrap );
+
+				return {
+					pre: function ( scope, element, attributes, controller, transcludeFn ) {
+
+						var $bootstrapContainer = $( document.createElement( 'div' ) );
+						$bootstrapContainer.addClass( 'wi-bs' ); //Todo: Change prefix to wc
+						element.wrap( $bootstrapContainer );
+
+					},
+					post: function ( scope, element, attributes, progressCtrl, transcludeFn ) {
+						progressCtrl.addBar( scope, angular.element( element.children()[0] ) );
+					}
+				};
+			}
 		},
-		template: ngProgressbar,
-		compile: function ( element, attributes, transclude ) {
-
-			// Todo: Just load within another compoment, would be cleaner ...
-			utils.addStyleToHeader( 'wcBootstrap', cssBootstrap );
-
-			return {
-				pre: function ( scope, element, attributes, controller, transcludeFn ) {
-
-					var $bootstrapContainer = $( document.createElement( 'div' ) );
-					$bootstrapContainer.addClass( 'wi-bs' ); //Todo: Change prefix to wc
-					element.wrap( $bootstrapContainer );
-
-				},
-				post: function ( scope, element, attributes, progressCtrl, transcludeFn ) {
-
-					progressCtrl.addBar( scope, angular.element( element.children()[0] ) );
-				}
-			};
-		}
-	};
-
-	qvangular.directive( 'ccProgress', function () {
-		return {
+		{
+			name: "ccProgress",
 			restrict: 'E',
 			replace: true,
 			transclude: true,
@@ -110,11 +107,9 @@ define( [
 			require: 'ccProgress',
 			scope: {},
 			template: ngProgress
-		};
-	} );
-
-	qvangular.directive( 'ccBar', function () {
-		return {
+		},
+		{
+			name: "ccBar",
 			restrict: 'E',
 			replace: true,
 			transclude: true,
@@ -127,9 +122,9 @@ define( [
 			link: function ( scope, element, attrs, progressCtrl ) {
 				progressCtrl.addBar( scope, element );
 			}
-		};
-	} );
+		}
+	];
 
-	return component;
+	return components;
 
 } );

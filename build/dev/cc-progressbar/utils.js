@@ -1,28 +1,27 @@
 /*global define,document*/
-define([
+define( [
 		'jquery',
 		'underscore'
 	],
-	function ($, _) {
-'use strict';
+	function ( $, _ ) {
+		'use strict';
 
 		var utils = {
 
-
 			// Add a inline style to the html-header (with a given Id),
 			// If the style already exists the existing one will be changed
-			addStyleToHeader: function (id, css) {
+			addStyleToHeader: function ( id, css ) {
 				var idPattern = 'qwidget_' + id;
-				var $headStyle = $('#' + idPattern);
-				if ($headStyle.length === 0) {
+				var $headStyle = $( '#' + idPattern );
+				if ( $headStyle.length === 0 ) {
 					// add the style
-					$headStyle = $(document.createElement('style'));
-					$headStyle.attr('type', 'text/css');
-					$headStyle.attr('id', idPattern);
-					$('head').append($headStyle);
+					$headStyle = $( document.createElement( 'style' ) );
+					$headStyle.attr( 'type', 'text/css' );
+					$headStyle.attr( 'id', idPattern );
+					$( 'head' ).append( $headStyle );
 				}
 				// add/change the style
-				$headStyle.text(css);
+				$headStyle.text( css );
 			},
 
 			/**
@@ -33,22 +32,22 @@ define([
 			 * @param key of the
 			 * @param link to the style sheet.
 			 */
-			addStyleLinkToHeader: function (key, link) {
+			addStyleLinkToHeader: function ( key, link ) {
 
-				$(document).ready(function () {
+				$( document ).ready( function () {
 
 					var idPattern = 'wiStyleLinked_' + key;
-					if ($('#' + idPattern).length === 0) {
-						var $lnk = $(document.createElement('link'));
-						$lnk.attr('rel', 'stylesheet');
-						$lnk.attr('href', link);
-						$lnk.attr('id', idPattern);
-						$("head").append($lnk);
+					if ( $( '#' + idPattern ).length === 0 ) {
+						var $lnk = $( document.createElement( 'link' ) );
+						$lnk.attr( 'rel', 'stylesheet' );
+						$lnk.attr( 'href', link );
+						$lnk.attr( 'id', idPattern );
+						$( "head" ).append( $lnk );
 					}
-				});
+				} );
 			}
 		};
 
 		return utils;
-	});
+	} );
 

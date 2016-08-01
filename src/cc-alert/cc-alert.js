@@ -1,12 +1,8 @@
-/**
- * @owner Jose Fernandez (jfz)
- * @triad Web Toolkit
- */
 define( [
 	"jquery",
 	"underscore",
-	"text!./qw-alert.ng.html",
-	"css!./qw-alert.css"
+	"text!./cc-alert.ng.html",
+	"css!./cc-alert.css"
 ], function ( $, _, template ) {
 	'use strict';
 
@@ -14,15 +10,11 @@ define( [
 	 *
 	 * @usage
 	 *
-	 * <qw-alert closable="true" auto-close-after="10">This is the alert message</qw-alert>
-	 *
-	 * @todo
-	 * - Error handling in case autoCloseAfter is not a numeric value
-	 * - Convert the .css to a .less file
+	 * <cc-alert closable="true" auto-close-after="10">This is the alert message</cc-alert>
 	 *
 	 */
 	return {
-		name: "qwAlert",
+		name: "ccAlert",
 		restrict: 'E',
 		replace: true,
 		transclude: true,
