@@ -8,12 +8,15 @@ define( [
 
 		'./wiVariableService',
 		'./external/jquery-ui-slider-pips.modified',
-		'css!./less/cc-slider.css'
+		'css!./less/sc-slider.css'
 	],
 	function ( $, qvangular, qlik, BaseController, angular, wiVariableService ) {
 		'use strict';
 
-		var wiSliderObjectController = ['$scope', 'wiVariableService', function ( $scope, wiSliderService ) {
+		var $injector = angular.injector(['ng']);
+		var $timeout = $injector.get("$timeout");
+
+		var wiSliderObjectController = function ( $scope ) {
 
 			$scope.defaultValue = undefined;
 			$scope.defaultValueMin = undefined;
@@ -62,7 +65,7 @@ define( [
 				max: null
 			};
 
-		}];
+		};
 
 		// ****************************************************************************************
 		// wiSlider Component
@@ -80,13 +83,9 @@ define( [
 		//  - bindQsVarMax
 		//  - inits
 		// ****************************************************************************************
-		qvangular.directive( 'wiSliderObject', ['$timeout', 'wiVariableService', function ( $timeout, wiSliderService ) {
-
-			//console.log('wiSliderObject');
+		qvangular.directive( 'wiSliderObject', ['wiVariableService', function ( wiSliderService ) {
 
 			var compile = function ( tElement, tAttributes ) {
-
-				//console.log('--inside compile');
 
 				function parseNumber ( n, decimals ) {
 					return (decimals) ? parseFloat( n ) : parseInt( n );
@@ -98,7 +97,7 @@ define( [
 
 				// Weird implementation of parsing a string if there is a boolean value in it
 				// Returns:
-				//  - true if "true" is "defined"
+				//  - true if "true" is defined
 				//  - false if "false" is defined
 				//  - false if "" is defined
 				//  - otherwise the defaultValue will be returned
@@ -417,7 +416,6 @@ define( [
 					//                    });
 
 					function destroyFn () {
-						//console.info('wiSlider.$destroy');
 						element.slider( 'destroy' );
 						_.each( timers, function ( ctx ) {
 							if ( angular.isFunction( ctx ) ) {
@@ -425,7 +423,6 @@ define( [
 							}
 						} );
 					}
-
 					element.bind( '$destroy', destroyFn );
 
 				};
@@ -436,7 +433,7 @@ define( [
 			return ({
 				compile: compile,
 				restrict: 'AE',
-				controller: wiSliderObjectController,
+				controller: ['$scope', wiSliderObjectController],
 				scope: {
 					min: '=',
 					max: '=',
@@ -471,13 +468,12 @@ define( [
 		}] );
 
 		return {
-			name: 'ccSlider',
+			name: 'scSlider',
 			restrict: 'E',
 			template: '<div wi-slider-object></div>',
 			replace: true,
-			link: function ( $scope, element, attrs ) {
-
-				var className = 'wiSlider';
+			link: function ( $scope, element /*, attrs */ ) {
+				var className = 'scSlider';
 				element.wrap( '<div class="' + className + '"></div>' );
 			}
 		};

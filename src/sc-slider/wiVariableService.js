@@ -7,6 +7,9 @@ define([
     function (angular, qvangular, qlik) {
         'use strict';
 
+		// var $injector = angular.injector(['ng']);
+		// var $q = $injector.get("$q");
+
         qvangular.service("wiVariableService", ['$q', function ($q) {
             return {
 
