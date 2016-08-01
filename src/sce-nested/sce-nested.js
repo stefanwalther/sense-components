@@ -10,17 +10,17 @@ define( [], function () {
 	 *
 	 * @example
 	 *
-	 * <ccs-nested>
-	 *     <ccs-nested-item></ccs-nested-item>
-	 *     <ccs-nested-item></ccs-nested-item>
-	 * </ccs-nested>
+	 * <sce-nested>
+	 *     <sce-nested-item></sce-nested-item>
+	 *     <sce-nested-item></sce-nested-item>
+	 * </sce-nested>
 	 *
 	 *
 	 */
 
 	return [
 		{
-			name: "ccsNested",
+			name: "sceNested",
 			restrict: 'E',
 			transclude: true,
 			template: '<div>i am a outer<div ng-transclude></div>(end of outer)</div>',
@@ -31,9 +31,9 @@ define( [], function () {
 			}
 		},
 		{
-			name: "ccsNestedItem",
+			name: "sceNestedItem",
 			restrict: 'E',
-			require: '^ccsNested',
+			require: '^sceNested',
 			template: '<div style="margin-left:30px;">I am a inner</div>',
 			link: function ( scope, elem, attr, outerCtrl ) {
 				outerCtrl.addItem( 1 );
