@@ -64,14 +64,14 @@ define( [
 	 */
 	var components = [
 		{
-			name: "ccProgressbar",
+			name: "scProgressbar",
 			restrict: 'E',
 			replace: true,
 			transclude: true,
 			controller: ["$scope", "$attrs", ProgressController],
 			scope: {
 				value: '=',
-				design: '@'
+				type: '@'
 			},
 			template: ngProgressbar,
 			compile: function ( element, attributes, transclude ) {
@@ -111,7 +111,7 @@ define( [
 			require: '^scProgress',
 			scope: {
 				value: '=',
-				design: '@'
+				type: '@'
 			},
 			template: ngBar,
 			link: function ( scope, element, attrs, progressCtrl ) {
