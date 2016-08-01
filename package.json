@@ -43,7 +43,7 @@
     ]
   },
   "devDependencies": {
-    "flatpickr": "^1.9.1",
+    "flatpickr": "github:chmln/flatpickr#2.0",
     "gulp-format-md": "^0.1.9"
   }
 }

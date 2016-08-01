@@ -74,4 +74,5 @@ import:
   files:
     - ["./node_modules/flatpickr/dist/flatpickr.min.js", "./.tmp/sc-datepicker/external/flatpickr/"]
     - ["./node_modules/flatpickr/dist/flatpickr.min.css", "./.tmp/sc-datepicker/external/flatpickr/"]
+    - ["./node_modules/flatpickr/dist/flatpickr.material_orange.min.css", "./.tmp/sc-datepicker/external/flatpickr/"]
 
