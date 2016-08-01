@@ -8,10 +8,8 @@
  */
 define( [
 	'jquery',
-	'qvangular',
 	'angular',
 	'underscore',
-	'objects.extension/base-controller',
 
 	'./utils',
 
@@ -23,7 +21,7 @@ define( [
 
 
 	// templates
-], function ( $, qvangular, angular, _, BaseController, utils, ngBar, ngProgress, ngProgressbar, cssBootstrap ) {
+], function ( $, angular, _, utils, ngBar, ngProgress, ngProgressbar, cssBootstrap ) {
 
 	'use strict';
 
@@ -33,36 +31,34 @@ define( [
 		max: 100
 	};
 
-	var ProgressController = BaseController.extend( {
-		init: function ( $scope, $attrs ) {
-			var self = this;
-			var animate = angular.isDefined( $attrs.animate ) ? $scope.$parent.$eval( $attrs.animate ) : config.animate;
+	var ProgressController = function ( $scope, $attrs ) {
+		var self = this;
+		var animate = angular.isDefined( $attrs.animate ) ? $scope.$parent.$eval( $attrs.animate ) : config.animate;
 
-			this.bars = [];
-			$scope.max = angular.isDefined( $attrs.max ) ? $scope.$parent.$eval( $attrs.max ) : config.max;
+		this.bars = [];
+		$scope.max = angular.isDefined( $attrs.max ) ? $scope.$parent.$eval( $attrs.max ) : config.max;
 
-			this.addBar = function ( bar, element ) {
-				if ( !animate ) {
-					element.css( {'transition': 'none'} );
-				}
+		this.addBar = function ( bar, element ) {
+			if ( !animate ) {
+				element.css( {'transition': 'none'} );
+			}
 
-				this.bars.push( bar );
+			this.bars.push( bar );
 
-				bar.$watch( 'value', function ( value ) {
-					bar.percent = +(100 * value / $scope.max).toFixed( 2 );
-				} );
+			bar.$watch( 'value', function ( value ) {
+				bar.percent = +(100 * value / $scope.max).toFixed( 2 );
+			} );
 
-				bar.$on( '$destroy', function () {
-					element = null;
-					self.removeBar( bar );
-				} );
-			};
+			bar.$on( '$destroy', function () {
+				element = null;
+				self.removeBar( bar );
+			} );
+		};
 
-			this.removeBar = function ( bar ) {
-				this.bars.splice( this.bars.indexOf( bar ), 1 );
-			};
-		}
-	} );
+		this.removeBar = function ( bar ) {
+			this.bars.splice( this.bars.indexOf( bar ), 1 );
+		};
+	};
 
 	/**
 	 * wc-progressbar component.
