@@ -1,4 +1,4 @@
-## cc-progressbar
+## sc-progressbar
 
 > Progressbar component.
 
@@ -8,7 +8,7 @@
 ***Html:***
 
 ```html
-<cc-progressbar max="100" value="50">50%</cc-progressbar>
+<sc-progressbar max="100" value="50">50%</sc-progressbar>
 ```
 
 ***Result:***
@@ -18,7 +18,7 @@
 
 ### Properties
 
-`cc-progressbar` is only available as an Html-element not as an attribute.
+`sc-progressbar` is only available as an Html-element not as an attribute.
 
 * **`max`** - A number that specifies the total value of bars that is required. *(Default: 100)*
 * **`value`** - The current value of progress completed. 
@@ -28,12 +28,12 @@
 #### Example Using All Properties
 
 ```html
-<cc-progressbar 
+<sc-progressbar 
 	max="100" 
 	value="50" 
 	animate="true" 
 	design="danger">50%
-</cc-progressbar>
+</sc-progressbar>
 ```
 
 ### Stacked Progressbar
@@ -42,13 +42,13 @@ If you want to add multiple bars into the same progressbar you can create a stac
 
 ***Html:***
 ```html
-<cc-progressbar>
-    <cc-progress>
-        <cc-bar value="20" design="danger">20%</cc-bar>
-        <cc-bar value="10" design="success">10%</cc-bar>
-        <cc-bar value="60" design="info">60%</cc-bar>
-    </cc-progress>
-</cc-progressbar>
+<sc-progressbar>
+    <sc-progress>
+        <sc-bar value="20" design="danger">20%</sc-bar>
+        <sc-bar value="10" design="success">10%</sc-bar>
+        <sc-bar value="60" design="info">60%</sc-bar>
+    </sc-progress>
+</sc-progressbar>
 ```
 
 ***Result:***
