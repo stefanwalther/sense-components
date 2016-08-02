@@ -1,4 +1,4 @@
-## Alert (sc-alert)
+## Alert (`sc-alert`)
 
 > Render a simple, customizable alert.
 
