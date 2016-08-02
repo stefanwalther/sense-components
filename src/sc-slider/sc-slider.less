@@ -1,0 +1,41 @@
+@paddingVertical: 6px;
+@paddingHorizontal: 16px;
+
+@qlikOrange: #fab761;
+
+.sc-slider-container {
+	padding-left: @paddingHorizontal;
+	padding-right: @paddingHorizontal;
+	padding-top: @paddingVertical;
+	padding-top: @paddingVertical;
+
+	.noUi-handle {
+		border-radius: 10px;
+	}
+
+	.noUi-connect {
+		background: @qlikOrange;
+		box-shadow: inset 0 0 0 #fff;
+	}
+}
+
+.sc-slider-label {
+	font-weight: bold;
+	color: #737373;
+	margin-top: 10px;
+}
+
+.sc-slider-label-left {
+	display: inline-block;
+}
+
+.sc-slider-label-right {
+	display: inline-block;
+	float: right;
+}
+
+.sc-slider-label-middle {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}

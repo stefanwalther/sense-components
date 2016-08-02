@@ -44,6 +44,9 @@
   },
   "devDependencies": {
     "flatpickr": "github:chmln/flatpickr#2.0",
-    "gulp-format-md": "^0.1.9"
+    "gulp-format-md": "^0.1.9",
+    "nouislider": "github:leongersen/noUiSlider",
+    "nouislider-angular": "^2.6.0",
+    "wnumb": "github:leongersen/wnumb"
   }
 }
