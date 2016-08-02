@@ -14,7 +14,7 @@
 
 - **`closable`** *{boolean}* - Whether the alert should be closable or not. *(Default: false)*
 - **`auto-close-after`** *{numeric}* - Define the amount of milliseconds after which the alert should be automatically hidden.
-- **`design`** *{string}* - Defines the style of the component using Leonardo UI classes. 
+- **`type`** *{string}* - Defines the style of the component using Leonardo UI classes. 
 Possible values: `info`, `success`, `warning`, `danger`
 
 ### Screenshots
