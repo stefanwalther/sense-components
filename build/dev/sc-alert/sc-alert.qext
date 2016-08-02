@@ -1,7 +1,0 @@
-{
-  "name": "sc-alert",
-  "description": "Alert component",
-  "type": "component",
-  "version": 1,
-  "author": "Stefan Walther"
-}
