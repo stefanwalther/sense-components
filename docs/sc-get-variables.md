@@ -1,4 +1,4 @@
-## Get Variable Values (sc-get-variables)
+## Get Variable Values (`sc-get-variables`)
 
 > A simple custom component to fetch the value of one or more variables.
 
