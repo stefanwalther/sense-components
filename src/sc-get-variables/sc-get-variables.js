@@ -19,7 +19,6 @@ define( [
 			variableLoader.load( $attrs.content )
 				.then( function ( replies ) {
 					$scope.variables = replies;
-					console.log( $scope.variables );
 				} )
 				.catch( function ( err ) {
 					window.console.log( err );
