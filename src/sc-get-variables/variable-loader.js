@@ -14,7 +14,7 @@ define( [
 		 * @param {string} delimitedVars Comma delimited list of variables.
 		 * @returns {Promise<[VariableResult],Error>}
 		 */
-		function load ( delimitedVars ) {
+		function loadVariables ( delimitedVars ) {
 
 			var app = qlik.currApp();
 			var variables = delimitedVars.split( ',' );
@@ -61,7 +61,7 @@ define( [
 		}
 
 		return {
-			load: load
+			load: loadVariables
 		}
 
 	} );
