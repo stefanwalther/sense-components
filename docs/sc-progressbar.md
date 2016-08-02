@@ -1,4 +1,4 @@
-## sc-progressbar
+## Progressbar component (sc-progressbar)
 
 > Progressbar component.
 
