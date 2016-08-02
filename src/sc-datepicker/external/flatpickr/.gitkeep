@@ -5,6 +5,6 @@
 # Deployed to this folder by sense-go:
 #
 # - flatpickr.min.js
-# -
-#
-#
+# - flatpickr.min.css
+# - flatpickr.material_orange.min.css
+
