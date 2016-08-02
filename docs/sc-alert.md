@@ -1,6 +1,6 @@
-## Alert Component (sc-alert)
+## Alert (sc-alert)
 
-> The official example to render a simple alert.
+> Render a simple, customizable alert.
 
 
 ### Usage
