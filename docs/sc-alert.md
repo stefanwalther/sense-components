@@ -1,4 +1,4 @@
-## sc-alert
+## Alert Component (sc-alert)
 
 > The official example to render a simple alert.
 
