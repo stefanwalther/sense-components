@@ -1,6 +1,6 @@
 ## Slider (`sc-slider`)
 
-## Basic Usage
+### Basic Usage
 
 ### Properties
 
