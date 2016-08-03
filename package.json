@@ -47,5 +47,6 @@
     "gulp-format-md": "^0.1.9",
     "nouislider": "github:leongersen/noUiSlider",
     "wnumb": "github:leongersen/wnumb"
-  }
+  },
+  "private": true
 }
