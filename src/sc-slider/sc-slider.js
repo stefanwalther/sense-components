@@ -22,6 +22,7 @@ define( [
 
 		var $injector = angular.injector( ['ng'] );
 		var $timeout = $injector.get( "$timeout" );
+		var $q = $injector.get( "$q" );
 
 		return {
 			name: 'scSlider',
@@ -47,7 +48,6 @@ define( [
 
 				// Default value // todo still doesn' work properly ...
 				$scope.hideLabels = angular.isDefined( $scope.hideLabels ) ? $scope.hideLabels == 'true' : false;
-
 
 				var sliderType = (['range', 'single'].indexOf( $scope.sliderType ) >= 0 ? $scope.sliderType : 'single');
 				var opts = null;
@@ -219,15 +219,62 @@ define( [
 					var app = qlik.currApp();
 					varDefs.forEach( function ( varDef ) {
 						console.log( 'setvalue', varDef );
-						if ( !_.isEmpty( varDef.name ) ) {
-							app.variable.setContent( varDef.name, varDef.value )
-								.then( function ( reply ) {
-									angular.noop();
-									console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
-								} );
-						}
-					} )
 
+						ensureEngineVarExists( app, varDef.name )
+							.then( function ( isVarExisting ) {
+								if ( !_.isEmpty( varDef.name ) ) {
+									app.variable.setContent( varDef.name, varDef.value )
+										.then( function ( reply ) {
+											angular.noop();
+											console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
+										} );
+								}
+							} );
+
+					} )
+				}
+
+				/**
+				 * Checks if an engine var exists or not, if not a session var will be created.
+				 * @param app
+				 * @param varName
+				 * @returns {*}
+				 */
+				function ensureEngineVarExists ( app, varName ) {
+
+					var defer = $q.defer();
+					engineVarExists( app, varName ).then( function ( result ) {
+						if ( result ) {
+							defer.resolve();
+						} else {
+							return createEngineSessionVar( app, varName );
+						}
+					} );
+					return defer.promise;
+				}
+
+				function createEngineSessionVar ( app, varName ) {
+					return app.variable.create( {qName: varName} );
+				}
+
+				/**
+				 * Returns a promise containing the information whether a variable exists.
+				 *
+				 * @param {object} app The current app.
+				 * @param {string} varName The variable name.
+				 * @returns {Promise} A promise containing the model of the variable, otherwise null..
+				 */
+				function engineVarExists ( app, varName ) {
+					var defer = $q.defer();
+					app.variable.getByName( varName )
+						.then( function ( model ) {
+							defer.resolve( model );
+						}, function ( errorObject ) {
+							console.log( 'engineVarExists', errorObject );
+							defer.resolve( null );
+						} );
+
+					return defer.promise;
 				}
 
 				/**
@@ -236,7 +283,7 @@ define( [
 				 * @param {string[]} vars The variable names.
 				 * @private
 				 */
-				function getEngineVarVals( vars ) {
+				function getEngineVarVals ( vars ) {
 
 				}
 			}
