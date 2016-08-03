@@ -2,6 +2,6 @@
    "name": "sc-slider",
    "description": "Slider component",
    "type": "component",
-   "version": 1,
+   "version": "@@pkg.version",
    "author": "Stefan Walther"
  }

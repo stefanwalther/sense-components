@@ -68,6 +68,13 @@ deployment:
     extensionDirOverride:
 
 # -------------------------------------------------------------------------------
+# Customized Watcher
+# -------------------------------------------------------------------------------
+watch:
+  - "./src/**/*.*"
+  - "./node_modules/sense-slider-core/dist/*.*"
+
+# -------------------------------------------------------------------------------
 # Import settings
 # -------------------------------------------------------------------------------
 import:
@@ -80,3 +87,7 @@ import:
     - ["./node_modules/nouislider/distribute/nouislider.min.js","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/nouislider/distribute/nouislider.min.css","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/wnumb/wNumb.js","./.tmp/sc-slider/external/wnumb/"]
+
+    # sc-slider <= sc-slider-core
+    - ["./node_modules/sense-slider-core/dist","./.tmp/sc-slider"]
+
