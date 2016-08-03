@@ -1,0 +1,7 @@
+{
+  "name": "ccs-nested",
+  "description": "Nested component example",
+  "type": "component",
+  "version": 1,
+  "author": "Stefan Walther"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "sc-repeat-range",
+  "description": "Repeat in a given range",
+  "type": "component",
+  "version": 1,
+  "author": "Stefan Walther"
+}
