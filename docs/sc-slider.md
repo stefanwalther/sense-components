@@ -15,11 +15,13 @@ General properties:
 Properties for type `single`:  
 
 - **`start`** *{number}* - The start position for the handle (if using type `single`). *(Default: ?)*
-- **`qs-var`** *{}* - *(Default: )*
+- **`qs-var`** *{string}* - The name of the Qlik Engine variable to bind the value to (if using type `single`). *(Default: null)*
 
 Properties for type `range`:  
 
 - **`start-lower`** *{number}* - The start position for the lower/left handle (if using type `range`). *(Default: 0)*
-- **`start-upper`** *{}* - The start position for the upper/right handle (if using type `range`). *(Default: 100)*
-- **`qs-var-lower`** *{}* - *(Default: )*
-- **`qs-var-upper`** *{}* - *(Default: )*
+- **`start-upper`** *{number}* - The start position for the upper/right handle (if using type `range`). *(Default: 100)*
+- **`qs-var-lower`** *{string}* - The name of the Qlik Engine variable to bind the lower value to (if using type `range`). *(Default: null)*
+- **`qs-var-upper`** *{string}* - The name of the Qlik Engine variable to bind the upper value to (if using type `range`).*(Default: null)*
+
+### Examples
