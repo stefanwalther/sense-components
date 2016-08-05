@@ -12,17 +12,19 @@ define( [
 		'angular',
 		'qlik',
 		'text!./sc-slider.ng.html',
+		'./external/loglevel/loglevel.min',
 		'./external/nouislider/nouislider.min',
 		'./external/wnumb/wNumb',
 		'css!./external/nouislider/nouislider.min.css',
 		'css!./sc-slider.css'
 	],
-	function ( angular, qlik, ngTemplate, noUiSlider, wNumb ) {
+	function ( angular, qlik, ngTemplate, loglevel, noUiSlider, wNumb ) {
 		'use strict';
 
 		var $injector = angular.injector( ['ng'] );
 		var $timeout = $injector.get( "$timeout" );
 		var $q = $injector.get( "$q" );
+		var app = null;
 
 		return {
 			name: 'scSlider',
@@ -42,9 +44,12 @@ define( [
 				orientation: '@',
 				direction: '@', 	//todo - Not fully working, yet
 				tooltips: '@', 		//todo - Not fully working, yet
-				hideLabels: '@' 	//todo - Not fully working, yet
+				hideLabels: '@', 	//todo - Not fully working, yet
+				initFromQs: '@',
+				debugLevel: '@'
 			},
 			link: function ( $scope, element, attrs ) {
+
 
 				// Default value // todo still doesn' work properly ...
 				$scope.hideLabels = angular.isDefined( $scope.hideLabels ) ? $scope.hideLabels == 'true' : false;
@@ -52,12 +57,16 @@ define( [
 				var sliderType = (['range', 'single'].indexOf( $scope.sliderType ) >= 0 ? $scope.sliderType : 'single');
 				var opts = null;
 				var sliderInstance = null;
-				setLocalOpts();
+
+				// Todo: can probably be omitted, since the watcher is triggered anyhow all the time.
+				initLocalOpts();
 
 				// Set the labels, initially
 				setLabels( getSliderConfig_start() ); //Todo: should be the value, not the min & max
 
-				initSlider( getSliderConfig() );
+				//Todo: I think this can be omitted, since the watcher is always triggered anyhow
+				//initSlider( getSliderConfig() );
+
 				$scope.$watchGroup(
 					[
 						'sliderType',
@@ -72,12 +81,22 @@ define( [
 						'orientation',
 						'direction',
 						'tooltips',
-						'hideLabels'
+						'hideLabels',
+						'initFromQs'
 					], function ( newVal, oldVal ) {
 						console.log( 'new settings recognized', newVal );
-						setLocalOpts();
+						initLocalOpts();
 						initSlider( getSliderConfig() );
 					} );
+
+				$scope.$watch( 'logLevel', function ( newVal, oldVal ) {
+					if ( newVal && newVal !== oldVal ) {
+						if ( ['off', 'error', 'warn', 'info', 'log'].indexOf( $scope.debugLevel ) > -1 ) {
+							//Logger.setLevel( newVal );
+
+						}
+					}
+				} );
 
 				// *****************************************************************************************************
 
@@ -97,7 +116,15 @@ define( [
 							sliderInstance.on( 'change', function ( values, handle ) {
 								console.log( 'new values', values );
 								setLabels( values );
-								updateEngineVars( getVarDefs( values ) );
+								initApp()
+									.then( updateEngineVars.bind( null, getVarDefs() ) )
+									.then( initSliderValues )
+									.then( function () {
+
+									} )
+									.catch( function ( err ) {
+										window.console.error( err ); //Todo: Could be a errorHandler we use everywhere
+									} )
 							} );
 						} else {
 							console.log( 'slider already there, setting the values', config );
@@ -108,11 +135,40 @@ define( [
 				}
 
 				/**
+				 * Initializes the global variable app.
+				 * @returns {Promise}
+				 */
+				function initApp () {
+					return ensureApp();
+				}
+
+				/**
+				 * Initializes the slider values from the Engine's variable values.
+				 *
+				 * @description
+				 * This is only applicable if variables are defined and they have a valid value:
+				 *    - inside min & max
+				 *    - lower variable's value not higher then the upper variable's value, etc.
+				 *
+				 *    Fetching the initial values can also be turned off by the setting `initFromQs`
+				 */
+				function initSliderValues () {
+					var defer = $q.defer();
+					if ( opts.initFromQs ) {
+						//getEngineVarListValues()
+						defer.resolve();
+					} else {
+						defer.resolve();
+					}
+					return defer.promise;
+				}
+
+				/**
 				 * Set the local options, based on the scope properties, but with some default-value logic.
 				 *
 				 * @private
 				 */
-				function setLocalOpts () {
+				function initLocalOpts () {
 					opts = {
 						type: sliderType,
 						min: angular.isDefined( $scope.min ) ? $scope.min : 0,
@@ -173,7 +229,19 @@ define( [
 					return (sliderType === 'range') ? [parseInt( opts.startLower ), parseInt( opts.startUpper )] : [parseInt( opts.startLower )];
 				}
 
+				/**
+				 * Returns a list of values in the following format:
+				 *
+				 * @todo: doc more in detail
+				 *
+				 * @param values
+				 * @returns {Array}
+				 */
 				function getVarDefs ( values ) {
+
+					if ( !values ) {
+						values = sliderInstance.get();
+					}
 
 					var d = [];
 					d.push( {
@@ -216,19 +284,19 @@ define( [
 				 */
 				function updateEngineVars ( varDefs ) {
 
-					var app = qlik.currApp();
 					varDefs.forEach( function ( varDef ) {
-						console.log( 'setvalue', varDef );
+						console.log( 'updateEngineVars:setvalue', varDef );
 
-						ensureEngineVarExists( app, varDef.name )
+						ensureEngineVarExists( varDef.name )
 							.then( function ( isVarExisting ) {
-								if ( !_.isEmpty( varDef.name ) ) {
-									app.variable.setContent( varDef.name, varDef.value )
-										.then( function ( reply ) {
-											angular.noop();
-											console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
-										} );
-								}
+								app.variable.setContent( varDef.name, varDef.value )
+									.then( function ( reply ) {
+										angular.noop();
+										console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
+									} );
+							} )
+							.catch( function ( err ) {
+								window.console.error( 'updateEngineVars:error', err );
 							} );
 
 					} )
@@ -236,24 +304,29 @@ define( [
 
 				/**
 				 * Checks if an engine var exists or not, if not a session var will be created.
+				 *
 				 * @param app
 				 * @param varName
 				 * @returns {*}
 				 */
-				function ensureEngineVarExists ( app, varName ) {
+				function ensureEngineVarExists ( varName ) {
 
 					var defer = $q.defer();
-					engineVarExists( app, varName ).then( function ( result ) {
-						if ( result ) {
-							defer.resolve();
-						} else {
-							return createEngineSessionVar( app, varName );
-						}
-					} );
+					engineVarExists( varName )
+						.then( function ( result ) {
+							if ( result ) {
+								defer.resolve( true );
+							} else {
+								return createEngineSessionVar( varName );
+							}
+						} )
+						.catch( function ( err ) {
+							defer.reject( err );
+						} );
 					return defer.promise;
 				}
 
-				function createEngineSessionVar ( app, varName ) {
+				function createEngineSessionVar ( varName ) {
 					return app.variable.create( {qName: varName} );
 				}
 
@@ -264,13 +337,14 @@ define( [
 				 * @param {string} varName The variable name.
 				 * @returns {Promise} A promise containing the model of the variable, otherwise null..
 				 */
-				function engineVarExists ( app, varName ) {
+				function engineVarExists ( varName ) {
 					var defer = $q.defer();
+
 					app.variable.getByName( varName )
 						.then( function ( model ) {
 							defer.resolve( model );
 						}, function ( errorObject ) {
-							console.log( 'engineVarExists', errorObject );
+							window.console.error( 'engineVarExists: ', errorObject );
 							defer.resolve( null );
 						} );
 
@@ -278,13 +352,65 @@ define( [
 				}
 
 				/**
-				 * Get the values for given variables.
+				 * Retrieve the values of a list of variables.
 				 *
-				 * @param {string[]} vars The variable names.
+				 * @description Since $q.all fails on the first error, we have to resolve all first
+				 *
+				 * @param {string[]} varList The variable names.
 				 * @private
 				 */
-				function getEngineVarVals ( vars ) {
+				function getEngineVarListValues ( varList ) {
 
+					if ( varList && Array.isArray( varList ) ) {
+						var promises = [];
+						varList.forEach( function ( variable ) {
+							promises.push( getEngineVarValue( variable ) )
+						} );
+						return $q.all( promises );
+					}
+					return $q.reject( new Error( 'getEngineVarListValues variable list passed.' ) );
+				}
+
+				/**
+				 * Retrieve the value of a variable.
+				 *
+				 * @param {object} app The current Qlik Sense app instance.
+				 * @param {string} varName The variable name.
+				 * @returns {Promise} - Always returns a resolved promise, to be used in a $q.all scenario, which
+				 * shouldn't fail if one of the variables doesn't exist.
+				 * @private
+				 */
+				function getEngineVarValue ( varName ) {
+					var defer = $q.defer();
+
+					app.variable.getByName( varName )
+						.then( function ( result ) {
+							defer.resolve( {
+								success: true,
+								varName: varName,
+								result: result
+							} )
+						} )
+						.catch( function ( err ) {
+							defer.resolve( {
+								success: false,
+								varName: varName,
+								err: err
+							} );
+						} );
+					return defer.promise;
+				}
+
+				//Todo: Move this to initApp ... breaking out does not make it more readable in this case
+				function ensureApp () {
+					var defer = $q.defer();
+					if ( !app ) {
+						// Todo: Might be changed later on to reflect enigma's logic to fetch the current app
+						// (returning always a promise)
+						app = qlik.currApp();
+					}
+					defer.resolve( app );
+					return defer.promise;
 				}
 			}
 		};

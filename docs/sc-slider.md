@@ -9,6 +9,7 @@ General properties:
 - **`slider-type`** *{string}* - The type of the Slider - `single` or `range`. *(Default: `single`)*
 - **`min`** *{number}* - The minimum value of the Slider. *(Default: 0)*
 - **`max`** *{number}* - The maximum value of the Slider.*(Default: 100)*
+- **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
 - **``** *{}* - *(Default: )*
 
 Properties for type `single`:  
