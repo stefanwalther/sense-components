@@ -48,6 +48,11 @@ define( [
 				initFromQs: '@',
 				debugLevel: '@'
 			},
+			controller: function ( $scope) {
+				$scope.min = ($scope.min) ? $scope.min : 0;
+				$scope.max = ($scope.max) ? $scope.max : 100;
+				$scope.start = ($scope.start) ? $scope.start : Math.ceil($scope.max/2);
+			},
 			link: function ( $scope, element, attrs ) {
 
 				ensureApp();
@@ -118,7 +123,7 @@ define( [
 							sliderInstance.on( 'change', function ( values, handle ) {
 								console.log( 'new values', values );
 								setLabels( values );
-								initApp()
+								ensureApp()
 									.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
 									.catch( function ( err ) {
 										window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
@@ -143,7 +148,7 @@ define( [
 				 * Initializes the global variable app.
 				 * @returns {Promise}
 				 */
-				function initApp () {
+				function ensureApp () {
 					return ensureApp();
 				}
 
@@ -170,11 +175,11 @@ define( [
 								// });
 								// console.log('values', values);
 								// Todo: Check errors in the result, the promise always returns true!!!
-								if (opts.type === 'single') {
-									$scope.start = Math.ceil(reply[0].result.layout.qNum);
+								if ( opts.type === 'single' ) {
+									$scope.start = Math.ceil( reply[0].result.layout.qNum );
 								} else {
-									$scope.startLower = Math.ceil(reply[0].result.layout.qNum);
-									$scope.startUpper = Math.ceil(reply[1].result.layout.qNum);
+									$scope.startLower = Math.ceil( reply[0].result.layout.qNum );
+									$scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
 								}
 
 							} )
