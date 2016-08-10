@@ -1,53 +1,54 @@
 {
-    "name": "sense-components",
-    "description": "Components to be used (in Widgets) in Qlik Sense.",
-    "version": "0.1.1",
-    "homepage": "https://github.com/stefanwalther/sense-components",
-    "author": "Stefan Walther (https://github.com/stefanwalther)",
-    "repository": "stefanwalther/sense-components",
-    "bugs": {
-        "url": "https://github.com/stefanwalther/sense-components/issues"
+  "name": "sense-components",
+  "description": "Components to be used (in Widgets) in Qlik Sense.",
+  "version": "0.1.1",
+  "homepage": "https://github.com/stefanwalther/sense-components",
+  "author": "Stefan Walther (https://github.com/stefanwalther)",
+  "repository": "stefanwalther/sense-components",
+  "bugs": {
+    "url": "https://github.com/stefanwalther/sense-components/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "components",
+    "widget"
+  ],
+  "verb": {
+    "run": true,
+    "toc": {
+      "render": true,
+      "method": "preWrite",
+      "maxdepth": 2,
+      "footer": false
     },
-    "license": "MIT",
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "scripts": {
-        "test": "mocha"
-    },
-    "keywords": [
-        "components",
-        "widget"
+    "twitter": "waltherstefan",
+    "layout": "empty",
+    "tasks": [
+      "readme"
     ],
-    "verb": {
-        "run": true,
-        "toc": {
-            "render": true,
-            "method": "preWrite",
-            "maxdepth": 2,
-            "footer": false
-        },
-        "twitter": "waltherstefan",
-        "layout": "empty",
-        "tasks": [
-            "readme"
-        ],
-        "plugins": [
-            "gulp-format-md"
-        ],
-        "related": {
-            "list": []
-        },
-        "reflinks": [
-            "verb",
-            "verb-generate-readme"
-        ]
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": []
     },
-    "devDependencies": {
-        "flatpickr": "github:chmln/flatpickr#2.0",
-        "gulp-format-md": "^0.1.10",
-        "nouislider": "github:leongersen/noUiSlider",
-        "wnumb": "github:leongersen/wnumb"
-    },
-    "private": true
+    "reflinks": [
+      "verb",
+      "verb-generate-readme"
+    ]
+  },
+  "devDependencies": {
+    "flatpickr": "github:chmln/flatpickr#2.0",
+    "gulp-format-md": "^0.1.10",
+    "loglevel": "^1.4.1",
+    "nouislider": "github:leongersen/noUiSlider",
+    "wnumb": "github:leongersen/wnumb"
+  },
+  "private": true
 }

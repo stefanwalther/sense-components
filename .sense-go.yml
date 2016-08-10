@@ -78,5 +78,5 @@ import:
     - ["./node_modules/nouislider/distribute/nouislider.min.js","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/nouislider/distribute/nouislider.min.css","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/wnumb/wNumb.js","./.tmp/sc-slider/external/wnumb/"]
-    - ["./node_modules/sense-slider-core/dist","./.tmp/sc-slider"]
+    - ["./node_modules/loglevel/dist/loglevel.min.js","./.tmp/sc-slider/external/loglevel/"]
 
