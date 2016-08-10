@@ -1,5 +1,5 @@
 @paddingVertical: 6px;
-@paddingHorizontal: 16px;
+@paddingHorizontal: 30px;
 
 @qlikOrange: #fab761;
 
@@ -17,6 +17,21 @@
 		background: @qlikOrange;
 		box-shadow: inset 0 0 0 #fff;
 	}
+	﻿.noUi-horizontal {
+		.noUi-handle-upper {
+			.noUi-tooltip {
+				min-width: 60px;
+				left: -14px;
+			}
+		}
+		.noUi-handle-lower {
+			.noUi-tooltip {
+				top: 30px;
+				min-width: 60px;
+				left: -14px;
+			}
+		}
+	}
 }
 
 .sc-slider-label {
@@ -27,3 +42,4 @@
 	width: 100%;
 	text-align: center;
 }
+

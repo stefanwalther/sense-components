@@ -41,7 +41,7 @@ define( [
 				qsVarUpper: '@',
 				orientation: '@',
 				direction: '@', 	//todo - Not fully working, yet
-				tooltips: '@', 		//todo - Not fully working, yet
+				tooltips: '=',
 				hideLabel: '=',
 				initFromQs: '@',
 				debugLevel: '@'
@@ -53,12 +53,12 @@ define( [
 				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
 				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
 			},
-			link: function ( $scope, element, attrs ) {
+			link: function ( scope, element, attrs ) {
 
 				ensureApp();
 				console.log( varUtils );
 
-				var sliderType = (['range', 'single'].indexOf( $scope.sliderType ) >= 0 ? $scope.sliderType : 'single');
+				var sliderType = (['range', 'single'].indexOf( scope.sliderType ) >= 0 ? scope.sliderType : 'single');
 				var opts = null;
 				var sliderInstance = null;
 
@@ -71,7 +71,7 @@ define( [
 				//Todo: I think this can be omitted, since the watcher is always triggered anyhow
 				//initSlider( getSliderConfig() );
 
-				$scope.$watchGroup(
+				scope.$watchGroup(
 					[
 						'sliderType',
 						'min',
@@ -93,9 +93,9 @@ define( [
 						initSlider( getSliderConfig() );
 					} );
 
-				$scope.$watch( 'logLevel', function ( newVal, oldVal ) {
+				scope.$watch( 'logLevel', function ( newVal, oldVal ) {
 					if ( newVal && newVal !== oldVal ) {
-						if ( ['off', 'error', 'warn', 'info', 'log'].indexOf( $scope.debugLevel ) > -1 ) {
+						if ( ['off', 'error', 'warn', 'info', 'log'].indexOf( scope.debugLevel ) > -1 ) {
 							//Logger.setLevel( newVal );
 
 						}
@@ -113,32 +113,39 @@ define( [
 				 */
 				function initSlider ( config ) {
 					if ( sliderRequirementsCheck( config ) ) {
-						if ( !sliderInstance ) {
-							console.log( 'Initializing slider', config );
-							var sliderElem = element.find( '.sc-slider-item' )[0];
-							sliderInstance = noUiSlider.create( sliderElem, config );
-							sliderInstance.on( 'change', function ( values, handle ) {
-								console.log( 'new values', values );
-								setLabel( values );
-								ensureApp()
-									.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
-									.catch( function ( err ) {
-										window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
-									} )
-							} );
-							initSliderValues()
-								.then( function ( result ) {
-									console.log( 'initValues', result );
-								} )
-								.catch( function ( err ) {
-									console.log( 'initValues: ', err );
-								} )
-						} else {
-							console.log( 'slider already there, setting the values', config );
-							sliderInstance.updateOptions( config );
 
+						var sliderElem = element.find( '.sc-slider-item' )[0];
+
+						// Since there are only a few options which can be updated with .updateOptions,
+						// let's destroy and re-create the slider
+						if (sliderElem.noUiSlider) {
+							sliderElem.noUiSlider.off();
+							sliderElem.noUiSlider.destroy();
 						}
+						sliderInstance = noUiSlider.create( sliderElem, config );
+						sliderInstance.on( 'change', slider_ChangeHandler );
+						slider_OnInit();
 					}
+				}
+
+				function slider_OnInit() {
+					initSliderValues()
+						.then( function ( result ) {
+							console.log( 'initValues', result );
+						} )
+						.catch( function ( err ) {
+							console.log( 'initValues: ', err );
+						} )
+				}
+
+				function slider_ChangeHandler(values, handle) {
+					console.log( 'new values', values );
+					setLabel( values );
+					ensureApp()
+						.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
+						.catch( function ( err ) {
+							window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
+						} )
 				}
 
 				/**
@@ -173,12 +180,12 @@ define( [
 								// console.log('values', values);
 								// Todo: Check errors in the result, the promise always returns true!!!
 
-								if (reply.result) {
+								if ( reply.result ) {
 									if ( opts.type === 'single' ) {
-										$scope.start = Math.ceil( reply[0].result.layout.qNum );
+										scope.start = Math.ceil( reply[0].result.layout.qNum );
 									} else {
-										$scope.startLower = Math.ceil( reply[0].result.layout.qNum );
-										$scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
+										scope.startLower = Math.ceil( reply[0].result.layout.qNum );
+										scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
 									}
 								}
 							} )
@@ -201,15 +208,15 @@ define( [
 				function initLocalOpts () {
 					opts = {
 						type: sliderType,
-						min: angular.isDefined( $scope.min ) ? $scope.min : 0,
-						max: angular.isDefined( $scope.max ) ? $scope.max : 100,
-						startLower: (sliderType === 'single') ? $scope.start : $scope.startLower,
-						startUpper: $scope.startUpper,
-						qsVarLower: (sliderType === 'single') ? $scope.qsVar : $scope.qsVarLower,
-						qsVarUpper: $scope.qsVarUpper,
-						orientation: (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal',
-						direction: (['ltr', 'rtl'].indexOf( $scope.direction ) > -1) ? $scope.direction : 'ltr',
-						tooltips: _.isBoolean( $scope.tooltips ) ? $scope.tooltips : true,
+						min: angular.isDefined( scope.min ) ? scope.min : 0,
+						max: angular.isDefined( scope.max ) ? scope.max : 100,
+						startLower: (sliderType === 'single') ? scope.start : scope.startLower,
+						startUpper: scope.startUpper,
+						qsVarLower: (sliderType === 'single') ? scope.qsVar : scope.qsVarLower,
+						qsVarUpper: scope.qsVarUpper,
+						orientation: (['horizontal', 'vertical'].indexOf( scope.orientation ) > -1) ? scope.orientation : 'horizontal',
+						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
+						tooltips: scope.tooltips,
 						initFromQs: true // todo: make that dynamic
 					};
 				}
@@ -236,7 +243,7 @@ define( [
 				 */
 				function getSliderConfig () {
 
-					var toolTipConfig = [];
+					console.log('getSlilderconfig:tooltips', opts.tooltips);
 					return {
 						start: getSliderConfig_start(),
 						connect: (sliderType === 'range') ? true : false,
@@ -246,13 +253,11 @@ define( [
 						},
 						orientation: opts.orientation,
 						format: wNumb( {
-							decimals: 0,
-							thousand: ',',
-							postfix: ''
-						} )
+							decimals: 0
+						} ),
 						//,
 						//direction: opts.direction
-						//tooltips: (opts.tooltips) ? [wNumb({ decimals: 0 })] : [false]
+						tooltips: opts.tooltips
 					};
 				}
 
@@ -300,7 +305,7 @@ define( [
 				 */
 				function setLabel ( values ) {
 					var labelValue = '';
-					if ( values && !$scope.hideLabel ) {
+					if ( values && !scope.hideLabel ) {
 						labelValue = values[0];
 						if ( sliderType === 'range' ) {
 							labelValue += ' - ' + values[1];
@@ -320,6 +325,13 @@ define( [
 					defer.resolve( app );
 					return defer.promise;
 				}
+
+				scope.$on('$destroy', function() {
+					if (sliderInstance) {
+						sliderInstance.off();
+						sliderInstance.destroy();
+					}
+				});
 			}
 		};
 

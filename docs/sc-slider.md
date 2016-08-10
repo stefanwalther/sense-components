@@ -29,6 +29,7 @@ General properties:
 - **`max`** *{number}* - The maximum value of the Slider.*(Default: 100)*
 - **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
 - **`hideLabel`** *{boolean}* - Hide the label. *(Default: `false`)*
+- **`tooltips`** *{boolean}* - Whether to show tooltips or not. *(Default: `false`)*
 
 Properties for type `single`:  
 
@@ -46,7 +47,22 @@ Properties for type `range`:
 
 #### Hide the label
 
+#### Tooltips
 
+You can enable tooltips for the single- and the range-slider (turned off by default):
+
+```html
+	<sc-slider tooltip="true" />
+```
+
+
+**Tooltip for single-slider**
+
+![](docs/images/sc-slider--tooltip-single.png)
+
+**Tooltip for range-slider**:
+
+![](docs/images/sc-slider--tooltip-range.png)
 
 ### Limitations
 

@@ -437,6 +437,8 @@ General properties:
 
 * **`hideLabel`** _{boolean}_ - Hide the label. _(Default: `false`)_
 
+* **`tooltips`** _{boolean}_ - Whether to show tooltips or not. _(Default: `false`)_
+
 Properties for type `single`:
 
 * **`start`** _{number}_ - The start position for the handle (if using type `single`). _(Default: ?)_
@@ -454,6 +456,22 @@ Properties for type `range`:
 * **`qs-var-upper`** _{string}_ - The name of the Qlik Engine variable to bind the upper value to (if using type `range`)._(Default: null)_
 
 ### Examples
+
+#### Tooltips
+
+You can enable tooltips for the single- and the range-slider (turned off by default):
+
+```html
+    <sc-slider tooltip="true" />
+```
+
+**Tooltip for single-slider**
+
+![](docs/images/sc-slider--tooltip-single.png)
+
+**Tooltip for range-slider**:
+
+![](docs/images/sc-slider--tooltip-range.png)
 
 ### Limitations
 
