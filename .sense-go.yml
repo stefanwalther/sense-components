@@ -54,18 +54,8 @@ htmlmin:
 wbfolder:
   enabled: false
 deployment:
-  toSsh:
-    enabled: true
-    host: "192.168.56.13"
-    port: 22
-    username: "stefanwalther"
-    password: "Test1234"
-    dest: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/sense-components"
   toLocal:
     enabled: false
-    pathFetching: false
-    localExtensionsBaseDir:
-    extensionDirOverride:
 
 # -------------------------------------------------------------------------------
 # Customized Watcher
@@ -83,11 +73,10 @@ import:
     - ["./node_modules/flatpickr/dist/flatpickr.min.js", "./.tmp/sc-datepicker/external/flatpickr/"]
     - ["./node_modules/flatpickr/dist/flatpickr.min.css", "./.tmp/sc-datepicker/external/flatpickr/"]
     - ["./node_modules/flatpickr/dist/flatpickr.material_orange.min.css", "./.tmp/sc-datepicker/external/flatpickr/"]
+
     # sc-slider
     - ["./node_modules/nouislider/distribute/nouislider.min.js","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/nouislider/distribute/nouislider.min.css","./.tmp/sc-slider/external/nouislider/"]
     - ["./node_modules/wnumb/wNumb.js","./.tmp/sc-slider/external/wnumb/"]
-
-    # sc-slider <= sc-slider-core
     - ["./node_modules/sense-slider-core/dist","./.tmp/sc-slider"]
 
