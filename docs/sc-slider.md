@@ -10,7 +10,6 @@ General properties:
 - **`min`** *{number}* - The minimum value of the Slider. *(Default: 0)*
 - **`max`** *{number}* - The maximum value of the Slider.*(Default: 100)*
 - **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
-- **``** *{}* - *(Default: )*
 
 Properties for type `single`:  
 
@@ -25,3 +24,5 @@ Properties for type `range`:
 - **`qs-var-upper`** *{string}* - The name of the Qlik Engine variable to bind the upper value to (if using type `range`).*(Default: null)*
 
 ### Examples
+
+
