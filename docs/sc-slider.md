@@ -2,6 +2,14 @@
 
 ### Basic Usage
 
+```html
+<sc-slider></sc-slider>
+```
+
+results into
+
+![](docs/images/sc-slider--default.png)
+
 ### Properties
 
 General properties:  
