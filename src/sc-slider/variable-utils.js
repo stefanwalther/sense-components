@@ -22,6 +22,9 @@ define( [
 			 * Update the defined Qlik Sense variables based on the values of the slider.
 			 *
 			 * @todo Handle non existing variables
+			 * @todo Handle properly return values
+			 * @todo Handle properly empty variable defs
+			 * @todo Document the promise return ...
 			 *
 			 * @param app
 			 * @param varDef
@@ -37,13 +40,12 @@ define( [
 
 					// Todo: double-check if this is really necessary, what does `setContent` return if the variable does not exist?
 
-					if (!_.isEmpty(varDef.name)) {
+					if ( !_.isEmpty( varDef.name ) ) {
 						self.ensureEngineVarExists( app, varDef.name )
 							.then( function ( /* isVarExisting */ ) {
+								// Todo Without debugging, this could just be a return
 								app.variable.setContent( varDef.name, varDef.value )
 									.then( function ( reply ) {
-
-										angular.noop();
 										console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
 									} );
 							} )
@@ -131,7 +133,9 @@ define( [
 				if ( varList && Array.isArray( varList ) ) {
 					var promises = [];
 					varList.forEach( function ( variable ) {
-						promises.push( self.getEngineVarValue( app, variable ) )
+						if ( !_.isEmpty( variable ) ) {
+							promises.push( self.getEngineVarValue( app, variable ) )
+						}
 					} );
 					return $q.all( promises );
 				}

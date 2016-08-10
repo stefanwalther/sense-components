@@ -1,7 +1,6 @@
 /**
  * Slider component
  *
- * @todo Handles exceptions if start, startUpper, startLower is not set
  * @todo rtl not fully tested
  * @todo Default settings for rtl-support
  */
