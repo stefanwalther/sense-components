@@ -1,4 +1,4 @@
-## Minichart (sc-minichart)
+## Minichart (`sc-minichart`)
 
 > The minichart directive allows you to integrate several minicharts (bar, sparkline, bulletchart, etc.) into your widgets.
 

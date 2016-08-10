@@ -6,7 +6,7 @@
 
 - [Alert (`sc-alert`)](#alert-sc-alert)
 - [Get Variable Values (`sc-get-variables`)](#get-variable-values-sc-get-variables)
-- [Minichart (sc-minichart)](#minichart-sc-minichart)
+- [Minichart (`sc-minichart`)](#minichart-sc-minichart)
 - [Progressbar (`sc-progressbar`)](#progressbar-sc-progressbar)
 - [Slider (`sc-slider`)](#slider-sc-slider)
 
@@ -65,7 +65,7 @@ Possible values: `info`, `success`, `warning`, `danger`
 
 * **`content`** _{string}_ - Comma separated list of variables to be loaded.
 
-## Minichart (sc-minichart)
+## Minichart (`sc-minichart`)
 
 > The minichart directive allows you to integrate several minicharts (bar, sparkline, bulletchart, etc.) into your widgets.
 
