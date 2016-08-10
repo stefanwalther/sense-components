@@ -439,6 +439,8 @@ General properties:
 
 * **`tooltips`** _{boolean}_ - Whether to show tooltips or not. _(Default: `false`)_
 
+* **`step`** _{number}_ - By default, the slider slides fluently. In order to make the handles jump between intervals, you can use this option. _(Default: 1)_
+
 Properties for type `single`:
 
 * **`start`** _{number}_ - The start position for the handle (if using type `single`). _(Default: ?)_

@@ -30,6 +30,7 @@ General properties:
 - **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
 - **`hideLabel`** *{boolean}* - Hide the label. *(Default: `false`)*
 - **`tooltips`** *{boolean}* - Whether to show tooltips or not. *(Default: `false`)*
+- **`step`** *{number}* - By default, the slider slides fluently. In order to make the handles jump between intervals, you can use this option. *(Default: 1)*
 
 Properties for type `single`:  
 

@@ -36,6 +36,7 @@ define( [
 				start: '@',
 				startLower: '@',
 				startUpper: '@',
+				step: '=',
 				qsVar: '@',
 				qsVarLower: '@',
 				qsVarUpper: '@',
@@ -52,6 +53,7 @@ define( [
 				$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
 				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
 				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
+				$scope.step = ($scope.step && _.isNumber($scope.step)) ? parseFloat($scope.step) : 1;
 			},
 			link: function ( scope, element, attrs ) {
 
@@ -210,6 +212,7 @@ define( [
 						type: sliderType,
 						min: angular.isDefined( scope.min ) ? scope.min : 0,
 						max: angular.isDefined( scope.max ) ? scope.max : 100,
+						step: angular.isDefined( scope.step ) ? scope.step: 1,
 						startLower: (sliderType === 'single') ? scope.start : scope.startLower,
 						startUpper: scope.startUpper,
 						qsVarLower: (sliderType === 'single') ? scope.qsVar : scope.qsVarLower,
