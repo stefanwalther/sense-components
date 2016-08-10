@@ -130,12 +130,12 @@ Set the "type" option to "tristate" to generate tristate charts.
 
 | Option 							| Description
 | -------------------------			| ------------
-| **`pos-bar-color`**					| CSS color for positive (win) values
-| **`neg-bar-color`**					| CSS color for negative (lose) values
-| **`zero-bar-color`**				| CSS color for zero (draw) values
-| **`bar-width`**					| Width of each bar, in pixels (integer)
-| **`bar-spacing`**					| Space between each bar, in pixels (integer)
-| **`color-map`**					| A range map to map specific values to selected colours. For example if you want all values of -2 to appear yellow, use colorMap: { '-2': '#ff0' }.<br/><br/>As of version 1.5 you may also pass an array of values here instead of a mapping to specifiy a color for each individual bar. For example if your chart has three values 1,3,1 you can set colorMap=["red", "green", "blue"]<br/><br/> As of version 2.0, objects will be automatically be converted to range maps so you can specify colours for a range of values 
+| `pos-bar-color`					| CSS color for positive (win) values
+| `neg-bar-color`					| CSS color for negative (lose) values
+| `zero-bar-color`				    | CSS color for zero (draw) values
+| `bar-width`					    | Width of each bar, in pixels (integer)
+| `bar-spacing`					    | Space between each bar, in pixels (integer)
+| `color-map`					    | A range map to map specific values to selected colours. For example if you want all values of -2 to appear yellow, use colorMap: { '-2': '#ff0' }.<br/><br/>As of version 1.5 you may also pass an array of values here instead of a mapping to specifiy a color for each individual bar. For example if your chart has three values 1,3,1 you can set colorMap=["red", "green", "blue"]<br/><br/> As of version 2.0, objects will be automatically be converted to range maps so you can specify colours for a range of values 
 
 ### Discrete Chart Options
 
