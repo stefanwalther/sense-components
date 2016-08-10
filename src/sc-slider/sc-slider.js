@@ -53,7 +53,7 @@ define( [
 				$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
 				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
 				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
-				$scope.step = ($scope.step && _.isNumber($scope.step)) ? parseFloat($scope.step) : 1;
+				$scope.orientation = (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal';
 			},
 			link: function ( scope, element, attrs ) {
 
@@ -81,6 +81,7 @@ define( [
 						'start',
 						'startLower',
 						'startUpper',
+						'step',
 						'qsVar',
 						'qsVarLower',
 						'qsVarUpper',
@@ -120,7 +121,7 @@ define( [
 
 						// Since there are only a few options which can be updated with .updateOptions,
 						// let's destroy and re-create the slider
-						if (sliderElem.noUiSlider) {
+						if ( sliderElem.noUiSlider ) {
 							sliderElem.noUiSlider.off();
 							sliderElem.noUiSlider.destroy();
 						}
@@ -130,7 +131,7 @@ define( [
 					}
 				}
 
-				function slider_OnInit() {
+				function slider_OnInit () {
 					initSliderValues()
 						.then( function ( result ) {
 							console.log( 'initValues', result );
@@ -140,7 +141,7 @@ define( [
 						} )
 				}
 
-				function slider_ChangeHandler(values, handle) {
+				function slider_ChangeHandler ( values, handle ) {
 					console.log( 'new values', values );
 					setLabel( values );
 					ensureApp()
@@ -208,16 +209,19 @@ define( [
 				 * @private
 				 */
 				function initLocalOpts () {
+
+					console.log( 'opts.step', scope.step );
+
 					opts = {
 						type: sliderType,
 						min: angular.isDefined( scope.min ) ? scope.min : 0,
 						max: angular.isDefined( scope.max ) ? scope.max : 100,
-						step: angular.isDefined( scope.step ) ? scope.step: 1,
+						step: (scope.step && _.isNumber( scope.step )) ? parseFloat( scope.step ) : 1,
 						startLower: (sliderType === 'single') ? scope.start : scope.startLower,
 						startUpper: scope.startUpper,
 						qsVarLower: (sliderType === 'single') ? scope.qsVar : scope.qsVarLower,
 						qsVarUpper: scope.qsVarUpper,
-						orientation: (['horizontal', 'vertical'].indexOf( scope.orientation ) > -1) ? scope.orientation : 'horizontal',
+						orientation: scope.orientation,
 						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
 						tooltips: scope.tooltips,
 						initFromQs: true // todo: make that dynamic
@@ -246,7 +250,6 @@ define( [
 				 */
 				function getSliderConfig () {
 
-					console.log('getSlilderconfig:tooltips', opts.tooltips);
 					return {
 						start: getSliderConfig_start(),
 						connect: (sliderType === 'range') ? true : false,
@@ -258,6 +261,7 @@ define( [
 						format: wNumb( {
 							decimals: 0
 						} ),
+						step: opts.step,
 						//,
 						//direction: opts.direction
 						tooltips: opts.tooltips
@@ -329,12 +333,12 @@ define( [
 					return defer.promise;
 				}
 
-				scope.$on('$destroy', function() {
-					if (sliderInstance) {
+				scope.$on( '$destroy', function () {
+					if ( sliderInstance ) {
 						sliderInstance.off();
 						sliderInstance.destroy();
 					}
-				});
+				} );
 			}
 		};
 
