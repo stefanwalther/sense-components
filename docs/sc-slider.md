@@ -18,7 +18,7 @@ The default slider is a slider to only manipulate one value, if you want to go f
 
 which results into
 
-![](sc-slider-default-range.png)
+![](docs/images/sc-slider-default-range.png)
 
 ### Properties
 
