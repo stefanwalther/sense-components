@@ -4,17 +4,19 @@
 
 ### Basic Example
 
-	<sc-minichart 
-	    type="line" 
-	    data="10,66,13,58"
-	    width="100px">
-	</sc-minichart>
+```html
+<sc-minichart 
+    type="line" 
+    data="10,66,13,58"
+    width="100px">
+</sc-minichart>
+```
 
-Results into 
+results into 
 ![](docs/images/sc-minichart--default.png)
 
 ### Usage
-wiMinichart can be either used as an element or as an attribute:
+`sc-minichart` can be either used as an element or as an attribute:
 
 ***Element:***
 
@@ -38,6 +40,7 @@ Minicharts are available in the following types:
 
 ### Usage
 You can implement several minicharts within a single widget.
+
 Common usage scenarios:
 * Use a minichart in the background of KPI-tile
 * Use minicharts as inline-charts for tables
