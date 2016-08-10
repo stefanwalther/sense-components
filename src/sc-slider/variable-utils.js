@@ -5,9 +5,10 @@
  */
 /*global define,_*/
 define( [
-		'angular'
+		'angular',
+		'underscore'
 	],
-	function ( angular ) {
+	function ( angular, _ ) {
 		'use strict';
 
 		var $injector = angular.injector( ['ng'] );
@@ -22,7 +23,9 @@ define( [
 			 *
 			 * @todo Handle non existing variables
 			 *
-			 * @param values
+			 * @param app
+			 * @param varDef
+			 * @returns {Promise} `promise`
 			 * @api public
 			 */
 			this.updateEngineVars = function ( app, varDefs ) {
@@ -33,19 +36,23 @@ define( [
 					console.log( 'updateEngineVars:setvalue', varDef );
 
 					// Todo: double-check if this is really necessary, what does `setContent` return if the variable does not exist?
-					self.ensureEngineVarExists( app, varDef.name )
-						.then( function ( isVarExisting ) {
-							app.variable.setContent( varDef.name, varDef.value )
-								.then( function ( reply ) {
 
-									angular.noop();
-									console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
-								} );
-						} )
-						.catch( function ( err ) {
-							window.console.error( 'updateEngineVars:error', err );
-						} );
+					if (!_.isEmpty(varDef.name)) {
+						self.ensureEngineVarExists( app, varDef.name )
+							.then( function ( /* isVarExisting */ ) {
+								app.variable.setContent( varDef.name, varDef.value )
+									.then( function ( reply ) {
 
+										angular.noop();
+										console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
+									} );
+							} )
+							.catch( function ( err ) {
+								window.console.error( 'updateEngineVars:error', err );
+							} );
+					} else {
+						defer.resolve();
+					}
 				} );
 
 				return defer.promise;
