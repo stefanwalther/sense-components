@@ -2,6 +2,7 @@
 
 > Render a simple, customizable alert.
 
+**Status:** Stable
 
 ### Usage
 

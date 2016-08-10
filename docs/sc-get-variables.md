@@ -2,6 +2,8 @@
 
 > A simple custom component to fetch the value of one or more variables.
 
+**Status:** Experimental
+
 ### Usage
 
 ```html
