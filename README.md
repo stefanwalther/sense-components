@@ -71,18 +71,20 @@ Possible values: `info`, `success`, `warning`, `danger`
 
 ### Basic Example
 
-<sc-minichart
-type="line"
-data="10,66,13,58"
-width="100px">
+```html
+<sc-minichart 
+    type="line" 
+    data="10,66,13,58"
+    width="100px">
 </sc-minichart>
+```
 
-Results into
+results into
 ![](docs/images/sc-minichart--default.png)
 
 ### Usage
 
-wiMinichart can be either used as an element or as an attribute:
+`sc-minichart` can be either used as an element or as an attribute:
 
 **_Element:_**
 
@@ -107,6 +109,7 @@ Minicharts are available in the following types:
 ### Usage
 
 You can implement several minicharts within a single widget.
+
 Common usage scenarios:
 
 * Use a minichart in the background of KPI-tile
@@ -400,6 +403,26 @@ Examples how a progressbar would look like depending on the chosen `design`:
 
 ## Slider (`sc-slider`)
 
+### Basic Usage
+
+```html
+<sc-slider></sc-slider>
+```
+
+results into
+
+![](docs/images/sc-slider--default.png)
+
+The default slider is a slider to only manipulate one value, if you want to go for a range, change the slider as follows:
+
+```
+<sc-slider slider-type="range"></sc-slider>
+```
+
+which results into
+
+![](sc-slider-default-range.png)
+
 ### Properties
 
 General properties:
@@ -411,6 +434,8 @@ General properties:
 * **`max`** _{number}_ - The maximum value of the Slider._(Default: 100)_
 
 * **`init-from-qs`** _{boolean}_ - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). _(Default: `true`)_
+
+* **`hideLabel`** _{boolean}_ - Hide the label. _(Default: `false`)_
 
 Properties for type `single`:
 
@@ -429,6 +454,12 @@ Properties for type `range`:
 * **`qs-var-upper`** _{string}_ - The name of the Qlik Engine variable to bind the upper value to (if using type `range`)._(Default: null)_
 
 ### Examples
+
+### Limitations
+
+The current version of `sc-slider`
+
+* Does not accept decimal places, it will always ceil any input.
 
 <!--false-->
 <!--false-->
