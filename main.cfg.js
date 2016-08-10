@@ -18,8 +18,6 @@ var require = requirejs.config( {
 	},
 	deps: tests,
 	callback: function () {
-		window.mocha.ignoreLeaks( true );
-		window.mocha.fullTrace( true );
 		window.__karma__.start();
 	}
 } );

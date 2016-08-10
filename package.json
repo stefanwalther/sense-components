@@ -43,9 +43,6 @@
     ]
   },
   "devDependencies": {
-    "angular": "^1.5.8",
-    "angular-mocks": "^1.5.8",
-    "angularjs": "0.0.1",
     "flatpickr": "github:chmln/flatpickr#2.0",
     "gulp-format-md": "^0.1.9",
     "karma": "^1.1.2",
