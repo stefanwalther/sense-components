@@ -2,7 +2,6 @@
  * Slider component
  *
  * @todo Handles exceptions if start, startUpper, startLower is not set
- * @todo There is a weird bug if setting hideLabels ... ?!
  * @todo rtl not fully tested
  * @todo Default settings for rtl-support
  */
@@ -44,22 +43,21 @@ define( [
 				orientation: '@',
 				direction: '@', 	//todo - Not fully working, yet
 				tooltips: '@', 		//todo - Not fully working, yet
-				hideLabels: '@', 	//todo - Not fully working, yet
+				hideLabel: '=',
 				initFromQs: '@',
 				debugLevel: '@'
 			},
-			controller: function ( $scope) {
+			controller: function ( $scope ) {
 				$scope.min = ($scope.min) ? $scope.min : 0;
 				$scope.max = ($scope.max) ? $scope.max : 100;
-				$scope.start = ($scope.start) ? $scope.start : Math.ceil($scope.max/2);
+				$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
+				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
+				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
 			},
 			link: function ( $scope, element, attrs ) {
 
 				ensureApp();
 				console.log( varUtils );
-
-				// Default value // todo still doesn' work properly ...
-				$scope.hideLabels = angular.isDefined( $scope.hideLabels ) ? $scope.hideLabels == 'true' : false;
 
 				var sliderType = (['range', 'single'].indexOf( $scope.sliderType ) >= 0 ? $scope.sliderType : 'single');
 				var opts = null;
@@ -69,7 +67,7 @@ define( [
 				initLocalOpts();
 
 				// Set the labels, initially
-				setLabels( getSliderConfig_start() ); //Todo: should be the value, not the min & max
+				setLabel( getSliderConfig_start() ); //Todo: should be the value, not the min & max
 
 				//Todo: I think this can be omitted, since the watcher is always triggered anyhow
 				//initSlider( getSliderConfig() );
@@ -88,7 +86,7 @@ define( [
 						'orientation',
 						'direction',
 						'tooltips',
-						'hideLabels',
+						'hideLabel',
 						'initFromQs'
 					], function ( newVal, oldVal ) {
 						console.log( 'new settings recognized', newVal );
@@ -122,7 +120,7 @@ define( [
 							sliderInstance = noUiSlider.create( sliderElem, config );
 							sliderInstance.on( 'change', function ( values, handle ) {
 								console.log( 'new values', values );
-								setLabels( values );
+								setLabel( values );
 								ensureApp()
 									.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
 									.catch( function ( err ) {
@@ -175,13 +173,15 @@ define( [
 								// });
 								// console.log('values', values);
 								// Todo: Check errors in the result, the promise always returns true!!!
-								if ( opts.type === 'single' ) {
-									$scope.start = Math.ceil( reply[0].result.layout.qNum );
-								} else {
-									$scope.startLower = Math.ceil( reply[0].result.layout.qNum );
-									$scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
-								}
 
+								if (reply.result) {
+									if ( opts.type === 'single' ) {
+										$scope.start = Math.ceil( reply[0].result.layout.qNum );
+									} else {
+										$scope.startLower = Math.ceil( reply[0].result.layout.qNum );
+										$scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
+									}
+								}
 							} )
 							.catch( function ( err ) {
 								console.log( err ); //Todo: completely unnecessary, since the promise always returns true!!!
@@ -299,14 +299,14 @@ define( [
 				 * @param values
 				 * @private
 				 */
-				function setLabels ( values ) {
-					if ( values && !$scope.hideLabels === true ) {
+				function setLabel ( values ) {
+					var labelValue = '';
+					if ( values && !$scope.hideLabel ) {
+						labelValue = values[0];
 						if ( sliderType === 'range' ) {
-							element.find( '.sc-slider-label-left' )[0].innerHTML = values[0];
-							if ( values.length === 2 ) {element.find( '.sc-slider-label-right' )[0].innerHTML = values[1];}
-						} else {
-							element.find( '.sc-slider-label-middle' )[0].innerHTML = values[0];
+							labelValue += ' - ' + values[1];
 						}
+						element.find( '.sc-slider-label' )[0].innerHTML = labelValue;
 					}
 				}
 

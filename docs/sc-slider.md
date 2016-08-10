@@ -10,6 +10,16 @@ results into
 
 ![](docs/images/sc-slider--default.png)
 
+The default slider is a slider to only manipulate one value, if you want to go for a range, change the slider as follows:
+
+```
+<sc-slider slider-type="range"></sc-slider>
+```
+
+which results into
+
+![](sc-slider-default-range.png)
+
 ### Properties
 
 General properties:  
@@ -18,6 +28,7 @@ General properties:
 - **`min`** *{number}* - The minimum value of the Slider. *(Default: 0)*
 - **`max`** *{number}* - The maximum value of the Slider.*(Default: 100)*
 - **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
+- **`hideLabel`** *{boolean}* - Hide the label. *(Default: `false`)*
 
 Properties for type `single`:  
 
@@ -33,4 +44,12 @@ Properties for type `range`:
 
 ### Examples
 
+#### Hide the label
 
+
+
+### Limitations
+
+The current version of `sc-slider`
+
+- Does not accept decimal places, it will always ceil any input.
