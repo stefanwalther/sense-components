@@ -27,7 +27,7 @@ define( [
 			width: '@',				// Width of the input element
 			inline: '='
 		},
-		link: function ( scope, elem, attrs ) {
+		link: function ( scope, element, attrs ) {
 
 			var opts = {
 				allowInput: false,
@@ -37,9 +37,9 @@ define( [
 			// console.log('opts', opts);
 
 			// Element styling
-			elem.css( 'width', scope.width );
+			element.css( 'width', scope.width );
 
-			var e = angular.element( elem )[0];
+			var e = angular.element( element )[0];
 			var datePickr = new Flatpickr( e, opts );
 
 			datePickr.config.onChange = function ( dateObj ) {
