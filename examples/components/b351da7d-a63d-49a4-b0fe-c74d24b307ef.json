@@ -1,0 +1,162 @@
+{
+  "name": "slider",
+  "description": "",
+  "author": "",
+  "library": "components",
+  "meta": {
+    "type": "other"
+  },
+  "properties": {
+    "sections": [
+      {
+        "type": "header",
+        "order": 0,
+        "parent": "qw-pe-dropzone0-0",
+        "ref": "header1",
+        "label": "Layout"
+      },
+      {
+        "type": "header",
+        "order": 1,
+        "parent": "qw-pe-dropzone0-1",
+        "ref": "header2",
+        "label": "Slider Config"
+      },
+      {
+        "type": "header",
+        "order": 2,
+        "parent": "qw-pe-dropzone0-2",
+        "ref": "header4",
+        "label": "Variable Binding (Single)"
+      },
+      {
+        "type": "header",
+        "order": 3,
+        "parent": "qw-pe-dropzone0-3",
+        "ref": "header3",
+        "label": "Variable Binding (Range)"
+      }
+    ],
+    "settings": [
+      {
+        "type": "boolean",
+        "expression": "optional",
+        "defaultValue": false,
+        "order": 2,
+        "parent": "header1",
+        "ref": "hideLabel",
+        "label": "Hide Label"
+      },
+      {
+        "type": "boolean",
+        "expression": "optional",
+        "defaultValue": true,
+        "order": 3,
+        "parent": "header1",
+        "ref": "showTooltips",
+        "label": "Show Tooltips"
+      },
+      {
+        "component": "radiobuttons",
+        "type": "string",
+        "defaultValue": "single",
+        "options": [
+          {
+            "value": "single",
+            "label": "Single Value"
+          },
+          {
+            "label": "Range of Values",
+            "value": "range"
+          }
+        ],
+        "order": 0,
+        "parent": "header1",
+        "ref": "type",
+        "label": "Type"
+      },
+      {
+        "component": "dropdown",
+        "type": "string",
+        "defaultValue": "horizontal",
+        "options": [
+          {
+            "label": "Horizontal",
+            "value": "horizontal"
+          },
+          {
+            "label": "Vertical",
+            "value": "vertical"
+          }
+        ],
+        "order": 1,
+        "parent": "header1",
+        "ref": "orientation",
+        "label": "Orientation"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "0",
+        "order": 0,
+        "parent": "header2",
+        "ref": "min",
+        "label": "Min"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "100",
+        "order": 1,
+        "parent": "header2",
+        "ref": "max",
+        "label": "Max"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 3,
+        "parent": "header2",
+        "ref": "startUpper",
+        "label": "Start value (upper/right) handle"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 2,
+        "parent": "header2",
+        "ref": "startLower",
+        "label": "Start value (lower/left) handle"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 0,
+        "parent": "header3",
+        "ref": "varNameLower",
+        "label": "Lower/Left Variable Name"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 1,
+        "parent": "header3",
+        "ref": "varNameUpper",
+        "label": "Upper/Right Variable Name"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 0,
+        "parent": "header4",
+        "ref": "varName",
+        "label": "Variable name"
+      }
+    ]
+  }
+}
