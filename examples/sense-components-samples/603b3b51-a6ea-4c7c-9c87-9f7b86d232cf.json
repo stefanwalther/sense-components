@@ -1,0 +1,29 @@
+{
+  "name": "sc-alert",
+  "description": "",
+  "author": "",
+  "library": "sense-components-samples",
+  "meta": {},
+  "properties": {
+    "sections": [
+      {
+        "type": "header",
+        "order": 0,
+        "parent": "qw-pe-dropzone0-0",
+        "ref": "header1",
+        "label": "Settings"
+      }
+    ],
+    "settings": [
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 0,
+        "parent": "header1",
+        "ref": "message",
+        "label": "Alert Message"
+      }
+    ]
+  }
+}

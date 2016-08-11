@@ -21,3 +21,7 @@ import:
     files:
       - src: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Apps/Test-App.qvf"
         dest: "./examples/sense-components-samples"
+shell:
+  enabled: false
+  tasks:
+  - "rsync -ssh -rtuv stefanwalther@192.168.56.13:/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/sense-components-samples ~/git/stefanwalther/sense-components/examples"

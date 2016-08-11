@@ -1,0 +1,29 @@
+{
+  "name": "sc-slider-hide-label",
+  "description": "",
+  "author": "",
+  "library": "sense-components-samples",
+  "meta": {},
+  "properties": {
+    "sections": [
+      {
+        "type": "header",
+        "order": 0,
+        "parent": "qw-pe-dropzone0-0",
+        "ref": "header1",
+        "label": "Settings"
+      }
+    ],
+    "settings": [
+      {
+        "type": "boolean",
+        "expression": "optional",
+        "defaultValue": false,
+        "order": 0,
+        "parent": "header1",
+        "ref": "hideLabel",
+        "label": "Hide  Label"
+      }
+    ]
+  }
+}

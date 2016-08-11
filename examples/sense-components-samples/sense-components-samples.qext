@@ -1,0 +1,19 @@
+{
+  "name": "sense-components-samples",
+  "type": "widget-library",
+  "widgets": [
+    "a5509d9e-5e60-482a-ab57-a0e251a0b074",
+    "4f8ef1f6-2763-4cce-ab11-c6f66eef03fd",
+    "1cba013b-43f5-49d0-8be7-7cd9a38af046",
+    "603b3b51-a6ea-4c7c-9c87-9f7b86d232cf",
+    "7132504f-c2cc-49c9-9302-457166ba759e",
+    "f098d3fe-e387-418a-8aae-93b98e191336",
+    "0cf57030-3ca2-4cf4-b363-93688218e7af",
+    "9ee1c589-1b1c-496b-a891-2a5a56e83753",
+    "b351da7d-a63d-49a4-b0fe-c74d24b307ef",
+    "4d360d40-9fa6-4697-813d-ab97cf416fb2",
+    "db154a52-54ea-4aec-8ca6-1bf7ea7dd6dc",
+    "f6524ad4-d702-471e-8678-845924c87297",
+    "aed78700-75fe-4c36-bf1d-c4681894ab12"
+  ]
+}

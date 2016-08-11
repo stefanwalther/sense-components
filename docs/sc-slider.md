@@ -55,7 +55,7 @@ Properties for type `range`:
 
 You can enable tooltips for the single- and the range-slider (turned off by default):
 
-```html
+```html q
 	<sc-slider tooltip="true" />
 ```
 

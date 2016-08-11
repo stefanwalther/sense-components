@@ -1,0 +1,39 @@
+{
+  "name": "sc-slider-vertical",
+  "description": "",
+  "author": "",
+  "library": "sense-components-samples",
+  "meta": {},
+  "properties": {
+    "sections": [
+      {
+        "type": "header",
+        "order": 0,
+        "parent": "qw-pe-dropzone0-0",
+        "ref": "header1",
+        "label": "Settings"
+      }
+    ],
+    "settings": [
+      {
+        "component": "dropdown",
+        "type": "string",
+        "defaultValue": "horizontal",
+        "options": [
+          {
+            "label": "Horizontal",
+            "value": "horizontal"
+          },
+          {
+            "label": "Vertical",
+            "value": "vertical"
+          }
+        ],
+        "order": 0,
+        "parent": "header1",
+        "ref": "orientation",
+        "label": "Orientation"
+      }
+    ]
+  }
+}

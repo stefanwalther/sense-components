@@ -1,0 +1,74 @@
+{
+  "name": "sc-slider",
+  "description": "",
+  "author": "",
+  "library": "sense-components-samples",
+  "meta": {},
+  "properties": {
+    "sections": [
+      {
+        "type": "header",
+        "order": 0,
+        "parent": "qw-pe-dropzone0-0",
+        "ref": "header1",
+        "label": "Settings"
+      }
+    ],
+    "settings": [
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 4,
+        "parent": "header1",
+        "ref": "variableLower",
+        "label": "Variable Lower"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "",
+        "order": 5,
+        "parent": "header1",
+        "ref": "variableUpper",
+        "label": "Variable Upper"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "0",
+        "order": 0,
+        "parent": "header1",
+        "ref": "min",
+        "label": "Min"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "100",
+        "order": 1,
+        "parent": "header1",
+        "ref": "max",
+        "label": "Max"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "80",
+        "order": 3,
+        "parent": "header1",
+        "ref": "startUpper",
+        "label": "Start Upper/Left"
+      },
+      {
+        "type": "string",
+        "expression": "optional",
+        "defaultValue": "20",
+        "order": 2,
+        "parent": "header1",
+        "ref": "startLower",
+        "label": "Start Lower/Left"
+      }
+    ]
+  }
+}
