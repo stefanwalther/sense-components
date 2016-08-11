@@ -30,7 +30,7 @@ define( [
 			replace: true,
 			template: ngTemplate,
 			scope: {
-				sliderType: '@',
+				type: '@',
 				min: '@',
 				max: '@',
 				start: '@',
@@ -48,33 +48,32 @@ define( [
 				debugLevel: '@'
 			},
 			controller: function ( $scope ) {
-				$scope.min = ($scope.min) ? $scope.min : 0;
-				$scope.max = ($scope.max) ? $scope.max : 100;
-				$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
-				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
-				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
+
+				$scope.initValues = function () {
+					$scope.min = ($scope.min) ? $scope.min : 0;
+					$scope.max = ($scope.max) ? $scope.max : 100;
+					$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
+					$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
+					$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
+					$scope._type = (['range', 'single'].indexOf( $scope.type ) >= 0 ? $scope.type : 'single');
+				};
+				$scope.initValues();
+
 			},
 			link: function ( scope, element, attrs ) {
 
 				ensureApp();
 				console.log( varUtils );
 
-				var sliderType = (['range', 'single'].indexOf( scope.sliderType ) >= 0 ? scope.sliderType : 'single');
 				var opts = null;
 				var sliderInstance = null;
 
 				// Todo: can probably be omitted, since the watcher is triggered anyhow all the time.
 				initLocalOpts();
 
-				// Set the labels, initially
-				setLabel( getSliderConfig_start() ); //Todo: should be the value, not the min & max
-
-				//Todo: I think this can be omitted, since the watcher is always triggered anyhow
-				//initSlider( getSliderConfig() );
-
 				scope.$watchGroup(
 					[
-						'sliderType',
+						'type',
 						'min',
 						'max',
 						'start',
@@ -91,7 +90,9 @@ define( [
 						'initFromQs'
 					], function ( newVal, oldVal ) {
 						console.log( 'new settings recognized', newVal );
+						scope.initValues();
 						initLocalOpts();
+						console.log( 'after initLocalOpts', opts.type, scope._type );
 						initSlider( getSliderConfig() );
 					} );
 
@@ -126,6 +127,7 @@ define( [
 						}
 						sliderInstance = noUiSlider.create( sliderElem, config );
 						sliderInstance.on( 'change', slider_ChangeHandler );
+						sliderInstance.on( 'update', slider_UpdateHandler );
 						slider_OnInit();
 					}
 				}
@@ -142,12 +144,15 @@ define( [
 
 				function slider_ChangeHandler ( values, handle ) {
 					console.log( 'new values', values );
-					setLabel( values );
 					ensureApp()
 						.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
 						.catch( function ( err ) {
 							window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
 						} )
+				}
+
+				function slider_UpdateHandler ( values, handle ) {
+					setLabel( values );
 				}
 
 				/**
@@ -170,8 +175,9 @@ define( [
 				 */
 				function initSliderValues () {
 					var defer = $q.defer();
+					var varDefs = getVarDefs();
 					if ( opts.initFromQs ) {
-						varUtils.getEngineVarListValues( app, getVarDefs().map( function ( v ) { return v.name} ) )
+						varUtils.getEngineVarListValues( app, varDefs.map( function ( v ) { return v.name} ) )
 							.then( function ( reply ) {
 
 								console.log( 'getEngineVarListValues: ', reply );
@@ -205,18 +211,20 @@ define( [
 				/**
 				 * Set the local options, based on the scope properties, but with some default-value logic.
 				 *
+				 * Todo: We can get rid of this code, just put all the defaults to the controller.
+				 *
 				 * @private
 				 */
 				function initLocalOpts () {
 
 					opts = {
-						type: sliderType,
+						type: scope._type,
 						min: angular.isDefined( scope.min ) ? scope.min : 0,
 						max: angular.isDefined( scope.max ) ? scope.max : 100,
 						step: (scope.step && _.isNumber( scope.step )) ? parseFloat( scope.step ) : 1,
-						startLower: (sliderType === 'single') ? scope.start : scope.startLower,
+						startLower: (scope._type === 'single') ? scope.start : scope.startLower,
 						startUpper: scope.startUpper,
-						qsVarLower: (sliderType === 'single') ? scope.qsVar : scope.qsVarLower,
+						qsVarLower: (scope._type === 'single') ? scope.qsVar : scope.qsVarLower,
 						qsVarUpper: scope.qsVarUpper,
 						orientation: (['horizontal', 'vertical'].indexOf( scope.orientation ) > -1) ? scope.orientation : 'horizontal',
 						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
@@ -249,7 +257,7 @@ define( [
 
 					return {
 						start: getSliderConfig_start(),
-						connect: (sliderType === 'range') ? true : false,
+						connect: (scope._type === 'range') ? true : false,
 						range: {
 							'min': parseInt( opts.min ),
 							'max': parseInt( opts.max )
@@ -266,7 +274,7 @@ define( [
 				}
 
 				function getSliderConfig_start () {
-					return (sliderType === 'range') ? [parseInt( opts.startLower ), parseInt( opts.startUpper )] : [parseInt( opts.startLower )];
+					return (scope._type === 'range') ? [parseInt( opts.startLower ), parseInt( opts.startUpper )] : [parseInt( opts.startLower )];
 				}
 
 				/**
@@ -304,14 +312,14 @@ define( [
 				/**
 				 * Set the values for labels.
 				 *
-				 * @param values
+				 * @param values {Array<number>} Array of values
 				 * @private
 				 */
 				function setLabel ( values ) {
 					var labelValue = '';
 					if ( values && !scope.hideLabel ) {
 						labelValue = values[0];
-						if ( sliderType === 'range' ) {
+						if ( scope._type === 'range' ) {
 							labelValue += ' - ' + values[1];
 						}
 						element.find( '.sc-slider-label' )[0].innerHTML = labelValue;

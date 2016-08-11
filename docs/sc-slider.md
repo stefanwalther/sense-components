@@ -13,7 +13,7 @@ results into
 The default slider is a slider to only manipulate one value, if you want to go for a range, change the slider as follows:
 
 ```
-<sc-slider slider-type="range"></sc-slider>
+<sc-slider type="range"></sc-slider>
 ```
 
 which results into
@@ -24,7 +24,7 @@ which results into
 
 General properties:  
 
-- **`slider-type`** *{string}* - The type of the Slider - `single` or `range`. *(Default: `single`)*
+- **`type`** *{string}* - The type of the Slider - `single` or `range`. *(Default: `single`)*
 - **`min`** *{number}* - The minimum value of the Slider. *(Default: 0)*
 - **`max`** *{number}* - The maximum value of the Slider.*(Default: 100)*
 - **`init-from-qs`** *{boolean}* - Initialize the current position of the handle(s) based on the define QIX Engine variable(s). *(Default: `true`)*
