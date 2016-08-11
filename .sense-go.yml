@@ -9,6 +9,7 @@ packagageName: null
 # -------------------------------------------------------------------------------
 taskChains:
   "build":
+    - "shell"
     - "clean:tmp"
     - "copy:toTmp"
     - "import:fromLocal"
@@ -26,6 +27,7 @@ taskChains:
     - "deploy:toSsh"
     - "clean:tmp"
   "release":
+    - "shell"
     - "clean:tmp"
     - "copy:toTmp"
     - "import:fromLocal"
