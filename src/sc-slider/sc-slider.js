@@ -3,6 +3,7 @@
  *
  * @todo rtl not fully tested
  * @todo Default settings for rtl-support
+ * @todo Some refactoring to clean some code and get rid of some duplicated code
  */
 /*global define,_*/
 define( [
@@ -55,7 +56,9 @@ define( [
 					$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
 					$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
 					$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
+
 					$scope._type = (['range', 'single'].indexOf( $scope.type ) >= 0 ? $scope.type : 'single');
+					$scope._orientation = (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal';
 				};
 				$scope.initValues();
 
@@ -226,7 +229,7 @@ define( [
 						startUpper: scope.startUpper,
 						qsVarLower: (scope._type === 'single') ? scope.qsVar : scope.qsVarLower,
 						qsVarUpper: scope.qsVarUpper,
-						orientation: (['horizontal', 'vertical'].indexOf( scope.orientation ) > -1) ? scope.orientation : 'horizontal',
+						orientation: scope._orientation,
 						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
 						tooltips: scope.tooltips,
 						initFromQs: true // todo: make that dynamic

@@ -2,6 +2,7 @@
  * @public
  * @todo Break out to a separate module (sense-extension-utils) since this code is re-used in several components.
  * @todo Units & integration tests
+ * @todo Some renaming ("Engine" shouldn't be in the method names, quite obvious) - this is some kind of legacy thinking ...
  */
 /*global define,_*/
 define( [

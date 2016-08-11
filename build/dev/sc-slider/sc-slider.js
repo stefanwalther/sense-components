@@ -1,24 +1,23 @@
 /**
  * Slider component
  *
- * @todo Watch the attributes
- * @todo Handles exceptions if start, startUpper, startLower is not set
- * @todo There is a weird bug if setting hideLabels ... ?!
  * @todo rtl not fully tested
  * @todo Default settings for rtl-support
+ * @todo Some refactoring to clean some code and get rid of some duplicated code
  */
 /*global define,_*/
 define( [
 		'angular',
 		'qlik',
 		'text!./sc-slider.ng.html',
+		'./variable-utils',
 		'./external/loglevel/loglevel.min',
 		'./external/nouislider/nouislider.min',
 		'./external/wnumb/wNumb',
 		'css!./external/nouislider/nouislider.min.css',
 		'css!./sc-slider.css'
 	],
-	function ( angular, qlik, ngTemplate, loglevel, noUiSlider, wNumb ) {
+	function ( angular, qlik, ngTemplate, varUtils, loglevel, noUiSlider, wNumb ) {
 		'use strict';
 
 		var $injector = angular.injector( ['ng'] );
@@ -32,66 +31,77 @@ define( [
 			replace: true,
 			template: ngTemplate,
 			scope: {
-				sliderType: '@',
+				type: '@',
 				min: '@',
 				max: '@',
 				start: '@',
 				startLower: '@',
 				startUpper: '@',
+				step: '=',
 				qsVar: '@',
 				qsVarLower: '@',
 				qsVarUpper: '@',
 				orientation: '@',
 				direction: '@', 	//todo - Not fully working, yet
-				tooltips: '@', 		//todo - Not fully working, yet
-				hideLabels: '@', 	//todo - Not fully working, yet
+				tooltips: '=',
+				hideLabel: '=',
 				initFromQs: '@',
 				debugLevel: '@'
 			},
-			link: function ( $scope, element, attrs ) {
+			controller: function ( $scope ) {
 
+				$scope.initValues = function () {
+					$scope.min = ($scope.min) ? $scope.min : 0;
+					$scope.max = ($scope.max) ? $scope.max : 100;
+					$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
+					$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
+					$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
 
-				// Default value // todo still doesn' work properly ...
-				$scope.hideLabels = angular.isDefined( $scope.hideLabels ) ? $scope.hideLabels == 'true' : false;
+					$scope._type = (['range', 'single'].indexOf( $scope.type ) >= 0 ? $scope.type : 'single');
+					$scope._orientation = (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal';
+				};
+				$scope.initValues();
 
-				var sliderType = (['range', 'single'].indexOf( $scope.sliderType ) >= 0 ? $scope.sliderType : 'single');
+			},
+			link: function ( scope, element, attrs ) {
+
+				ensureApp();
+				console.log( varUtils );
+
 				var opts = null;
 				var sliderInstance = null;
 
 				// Todo: can probably be omitted, since the watcher is triggered anyhow all the time.
 				initLocalOpts();
 
-				// Set the labels, initially
-				setLabels( getSliderConfig_start() ); //Todo: should be the value, not the min & max
-
-				//Todo: I think this can be omitted, since the watcher is always triggered anyhow
-				//initSlider( getSliderConfig() );
-
-				$scope.$watchGroup(
+				scope.$watchGroup(
 					[
-						'sliderType',
+						'type',
 						'min',
 						'max',
 						'start',
 						'startLower',
 						'startUpper',
+						'step',
 						'qsVar',
 						'qsVarLower',
 						'qsVarUpper',
 						'orientation',
 						'direction',
 						'tooltips',
-						'hideLabels',
+						'hideLabel',
 						'initFromQs'
 					], function ( newVal, oldVal ) {
 						console.log( 'new settings recognized', newVal );
+						scope.initValues();
 						initLocalOpts();
+						console.log( 'after initLocalOpts', opts.type, scope._type );
 						initSlider( getSliderConfig() );
 					} );
 
-				$scope.$watch( 'logLevel', function ( newVal, oldVal ) {
+				scope.$watch( 'logLevel', function ( newVal, oldVal ) {
 					if ( newVal && newVal !== oldVal ) {
-						if ( ['off', 'error', 'warn', 'info', 'log'].indexOf( $scope.debugLevel ) > -1 ) {
+						if ( ['off', 'error', 'warn', 'info', 'log'].indexOf( scope.debugLevel ) > -1 ) {
 							//Logger.setLevel( newVal );
 
 						}
@@ -109,36 +119,50 @@ define( [
 				 */
 				function initSlider ( config ) {
 					if ( sliderRequirementsCheck( config ) ) {
-						if ( !sliderInstance ) {
-							console.log( 'Initializing slider', config );
-							var sliderElem = element.find( '.sc-slider-item' )[0];
-							sliderInstance = noUiSlider.create( sliderElem, config );
-							sliderInstance.on( 'change', function ( values, handle ) {
-								console.log( 'new values', values );
-								setLabels( values );
-								initApp()
-									.then( updateEngineVars.bind( null, getVarDefs() ) )
-									.then( initSliderValues )
-									.then( function () {
 
-									} )
-									.catch( function ( err ) {
-										window.console.error( err ); //Todo: Could be a errorHandler we use everywhere
-									} )
-							} );
-						} else {
-							console.log( 'slider already there, setting the values', config );
-							sliderInstance.updateOptions( config );
+						var sliderElem = element.find( '.sc-slider-item' )[0];
 
+						// Since there are only a few options which can be updated with .updateOptions,
+						// let's destroy and re-create the slider
+						if ( sliderElem.noUiSlider ) {
+							sliderElem.noUiSlider.off();
+							sliderElem.noUiSlider.destroy();
 						}
+						sliderInstance = noUiSlider.create( sliderElem, config );
+						sliderInstance.on( 'change', slider_ChangeHandler );
+						sliderInstance.on( 'update', slider_UpdateHandler );
+						slider_OnInit();
 					}
+				}
+
+				function slider_OnInit () {
+					initSliderValues()
+						.then( function ( result ) {
+							console.log( 'initValues', result );
+						} )
+						.catch( function ( err ) {
+							console.log( 'initValues: ', err );
+						} )
+				}
+
+				function slider_ChangeHandler ( values, handle ) {
+					console.log( 'new values', values );
+					ensureApp()
+						.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
+						.catch( function ( err ) {
+							window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
+						} )
+				}
+
+				function slider_UpdateHandler ( values, handle ) {
+					setLabel( values );
 				}
 
 				/**
 				 * Initializes the global variable app.
 				 * @returns {Promise}
 				 */
-				function initApp () {
+				function ensureApp () {
 					return ensureApp();
 				}
 
@@ -154,9 +178,33 @@ define( [
 				 */
 				function initSliderValues () {
 					var defer = $q.defer();
+					var varDefs = getVarDefs();
 					if ( opts.initFromQs ) {
-						//getEngineVarListValues()
-						defer.resolve();
+						varUtils.getEngineVarListValues( app, varDefs.map( function ( v ) { return v.name} ) )
+							.then( function ( reply ) {
+
+								console.log( 'getEngineVarListValues: ', reply );
+								// var values = [];
+								// result.forEach( function( varModel) {
+								// 	values.push(varModel.layout.qNum);
+								// });
+								// console.log('values', values);
+								// Todo: Check errors in the result, the promise always returns true!!!
+
+								if ( reply.result ) {
+									if ( opts.type === 'single' ) {
+										scope.start = Math.ceil( reply[0].result.layout.qNum );
+									} else {
+										scope.startLower = Math.ceil( reply[0].result.layout.qNum );
+										scope.startUpper = Math.ceil( reply[1].result.layout.qNum );
+									}
+								}
+							} )
+							.catch( function ( err ) {
+								console.log( err ); //Todo: completely unnecessary, since the promise always returns true!!!
+							} );
+
+						//defer.resolve();
 					} else {
 						defer.resolve();
 					}
@@ -166,20 +214,25 @@ define( [
 				/**
 				 * Set the local options, based on the scope properties, but with some default-value logic.
 				 *
+				 * Todo: We can get rid of this code, just put all the defaults to the controller.
+				 *
 				 * @private
 				 */
 				function initLocalOpts () {
+
 					opts = {
-						type: sliderType,
-						min: angular.isDefined( $scope.min ) ? $scope.min : 0,
-						max: angular.isDefined( $scope.max ) ? $scope.max : 100,
-						startLower: (sliderType === 'single') ? $scope.start : $scope.startLower,
-						startUpper: $scope.startUpper,
-						qsVarLower: (sliderType === 'single') ? $scope.qsVar : $scope.qsVarLower,
-						qsVarUpper: $scope.qsVarUpper,
-						orientation: (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal',
-						direction: (['ltr', 'rtl'].indexOf( $scope.direction ) > -1) ? $scope.direction : 'ltr',
-						tooltips: _.isBoolean( $scope.tooltips ) ? $scope.tooltips : true
+						type: scope._type,
+						min: angular.isDefined( scope.min ) ? scope.min : 0,
+						max: angular.isDefined( scope.max ) ? scope.max : 100,
+						step: (scope.step && _.isNumber( scope.step )) ? parseFloat( scope.step ) : 1,
+						startLower: (scope._type === 'single') ? scope.start : scope.startLower,
+						startUpper: scope.startUpper,
+						qsVarLower: (scope._type === 'single') ? scope.qsVar : scope.qsVarLower,
+						qsVarUpper: scope.qsVarUpper,
+						orientation: scope._orientation,
+						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
+						tooltips: scope.tooltips,
+						initFromQs: true // todo: make that dynamic
 					};
 				}
 
@@ -188,7 +241,7 @@ define( [
 				 *
 				 * @param config
 				 * @returns {boolean} Whether the required options are met or not.
-				 * @private
+				 * @public
 				 */
 				function sliderRequirementsCheck ( config ) {
 					if ( !config.start ) {
@@ -205,29 +258,31 @@ define( [
 				 */
 				function getSliderConfig () {
 
-					var toolTipConfig = [];
 					return {
 						start: getSliderConfig_start(),
-						connect: (sliderType === 'range') ? true : false,
+						connect: (scope._type === 'range') ? true : false,
 						range: {
 							'min': parseInt( opts.min ),
 							'max': parseInt( opts.max )
 						},
 						orientation: opts.orientation,
 						format: wNumb( {
-							decimals: 0,
-							thousand: ',',
-							postfix: ''
-						} )
+							decimals: 0
+						} ),
+						step: opts.step,
 						//,
 						//direction: opts.direction
-						//tooltips: (opts.tooltips) ? [wNumb({ decimals: 0 })] : [false]
+						tooltips: opts.tooltips
 					};
 				}
 
 				function getSliderConfig_start () {
-					return (sliderType === 'range') ? [parseInt( opts.startLower ), parseInt( opts.startUpper )] : [parseInt( opts.startLower )];
+					return (scope._type === 'range') ? [parseInt( opts.startLower ), parseInt( opts.startUpper )] : [parseInt( opts.startLower )];
 				}
+
+				/**
+				 * @type VariableDefinition
+				 */
 
 				/**
 				 * Returns a list of values in the following format:
@@ -235,7 +290,7 @@ define( [
 				 * @todo: doc more in detail
 				 *
 				 * @param values
-				 * @returns {Array}
+				 * @returns {Array<VariableDefinition>}
 				 */
 				function getVarDefs ( values ) {
 
@@ -260,145 +315,18 @@ define( [
 				/**
 				 * Set the values for labels.
 				 *
-				 * @param values
+				 * @param values {Array<number>} Array of values
 				 * @private
 				 */
-				function setLabels ( values ) {
-					if ( values && !$scope.hideLabels === true ) {
-						if ( sliderType === 'range' ) {
-							element.find( '.sc-slider-label-left' )[0].innerHTML = values[0];
-							if ( values.length === 2 ) {element.find( '.sc-slider-label-right' )[0].innerHTML = values[1];}
-						} else {
-							element.find( '.sc-slider-label-middle' )[0].innerHTML = values[0];
+				function setLabel ( values ) {
+					var labelValue = '';
+					if ( values && !scope.hideLabel ) {
+						labelValue = values[0];
+						if ( scope._type === 'range' ) {
+							labelValue += ' - ' + values[1];
 						}
+						element.find( '.sc-slider-label' )[0].innerHTML = labelValue;
 					}
-				}
-
-				/**
-				 * Update the defined Qlik Sense variables based on the values of the slider.
-				 *
-				 * @todo Handle non existing variables
-				 *
-				 * @param values
-				 * @private
-				 */
-				function updateEngineVars ( varDefs ) {
-
-					varDefs.forEach( function ( varDef ) {
-						console.log( 'updateEngineVars:setvalue', varDef );
-
-						ensureEngineVarExists( varDef.name )
-							.then( function ( isVarExisting ) {
-								app.variable.setContent( varDef.name, varDef.value )
-									.then( function ( reply ) {
-										angular.noop();
-										console.log( 'Value set for variable ' + varDef.name + '. ', 'Return: ', reply );
-									} );
-							} )
-							.catch( function ( err ) {
-								window.console.error( 'updateEngineVars:error', err );
-							} );
-
-					} )
-				}
-
-				/**
-				 * Checks if an engine var exists or not, if not a session var will be created.
-				 *
-				 * @param app
-				 * @param varName
-				 * @returns {*}
-				 */
-				function ensureEngineVarExists ( varName ) {
-
-					var defer = $q.defer();
-					engineVarExists( varName )
-						.then( function ( result ) {
-							if ( result ) {
-								defer.resolve( true );
-							} else {
-								return createEngineSessionVar( varName );
-							}
-						} )
-						.catch( function ( err ) {
-							defer.reject( err );
-						} );
-					return defer.promise;
-				}
-
-				function createEngineSessionVar ( varName ) {
-					return app.variable.create( {qName: varName} );
-				}
-
-				/**
-				 * Returns a promise containing the information whether a variable exists.
-				 *
-				 * @param {object} app The current app.
-				 * @param {string} varName The variable name.
-				 * @returns {Promise} A promise containing the model of the variable, otherwise null..
-				 */
-				function engineVarExists ( varName ) {
-					var defer = $q.defer();
-
-					app.variable.getByName( varName )
-						.then( function ( model ) {
-							defer.resolve( model );
-						}, function ( errorObject ) {
-							window.console.error( 'engineVarExists: ', errorObject );
-							defer.resolve( null );
-						} );
-
-					return defer.promise;
-				}
-
-				/**
-				 * Retrieve the values of a list of variables.
-				 *
-				 * @description Since $q.all fails on the first error, we have to resolve all first
-				 *
-				 * @param {string[]} varList The variable names.
-				 * @private
-				 */
-				function getEngineVarListValues ( varList ) {
-
-					if ( varList && Array.isArray( varList ) ) {
-						var promises = [];
-						varList.forEach( function ( variable ) {
-							promises.push( getEngineVarValue( variable ) )
-						} );
-						return $q.all( promises );
-					}
-					return $q.reject( new Error( 'getEngineVarListValues variable list passed.' ) );
-				}
-
-				/**
-				 * Retrieve the value of a variable.
-				 *
-				 * @param {object} app The current Qlik Sense app instance.
-				 * @param {string} varName The variable name.
-				 * @returns {Promise} - Always returns a resolved promise, to be used in a $q.all scenario, which
-				 * shouldn't fail if one of the variables doesn't exist.
-				 * @private
-				 */
-				function getEngineVarValue ( varName ) {
-					var defer = $q.defer();
-
-					app.variable.getByName( varName )
-						.then( function ( result ) {
-							defer.resolve( {
-								success: true,
-								varName: varName,
-								result: result
-							} )
-						} )
-						.catch( function ( err ) {
-							defer.resolve( {
-								success: false,
-								varName: varName,
-								err: err
-							} );
-						} );
-					return defer.promise;
 				}
 
 				//Todo: Move this to initApp ... breaking out does not make it more readable in this case
@@ -412,6 +340,13 @@ define( [
 					defer.resolve( app );
 					return defer.promise;
 				}
+
+				scope.$on( '$destroy', function () {
+					if ( sliderInstance ) {
+						sliderInstance.off();
+						sliderInstance.destroy();
+					}
+				} );
 			}
 		};
 

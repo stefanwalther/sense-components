@@ -13,7 +13,7 @@
 
 ***Result:***
 
-![](docs/images/component_wiProgressbar_BasicExample.png)
+![](images/component_wiProgressbar_BasicExample.png)
 
 
 ### Properties
@@ -52,14 +52,14 @@ If you want to add multiple bars into the same progressbar you can create a stac
 ***Result:***
 
 
-> ![](docs/images/component_wiProgressbar_StackedProgressbar.png)
+> ![](images/component_wiProgressbar_StackedProgressbar.png)
 
 
 ### Design Types
 
 Examples how a progressbar would look like depending on the chosen `design`:
 
-> ![](docs/images/component_wiProgressbar_Types.png)
+> ![](images/component_wiProgressbar_Types.png)
 
 
 

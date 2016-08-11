@@ -20,4 +20,4 @@ Possible values: `info`, `success`, `warning`, `danger`
 
 ### Screenshots
 
-![](docs/images/qw-alert--screenshot.png)
+![](images/qw-alert--screenshot.png)

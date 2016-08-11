@@ -1,6 +1,6 @@
-## Slider (`sc-slider`)
+# Slider (`sc-slider`)
 
-### Basic Usage
+## Basic Usage
 
 ```html
 <sc-slider></sc-slider>
@@ -8,7 +8,7 @@
 
 results into
 
-![](docs/images/sc-slider--default.png)
+![](images/sc-slider--default.png)
 
 The default slider is a slider to only manipulate one value, if you want to go for a range, change the slider as follows:
 
@@ -18,9 +18,9 @@ The default slider is a slider to only manipulate one value, if you want to go f
 
 which results into
 
-![](docs/images/sc-slider--default-range.png)
+![](images/sc-slider--default-range.png)
 
-### Properties
+## Properties
 
 General properties:  
 
@@ -46,11 +46,12 @@ Properties for type `range`:
 - **`qs-var-lower`** *{string}* - The name of the Qlik Engine variable to bind the lower value to (if using type `range`). *(Default: null)*
 - **`qs-var-upper`** *{string}* - The name of the Qlik Engine variable to bind the upper value to (if using type `range`).*(Default: null)*
 
-### Examples
+## Examples
 
-#### Hide the label
+### Hide the label
+(TBD)
 
-#### Tooltips
+### Tooltips
 
 You can enable tooltips for the single- and the range-slider (turned off by default):
 
@@ -61,13 +62,13 @@ You can enable tooltips for the single- and the range-slider (turned off by defa
 
 **Tooltip for single-slider**
 
-![](docs/images/sc-slider--tooltip-single.png)
+![](images/sc-slider--tooltip-single.png)
 
 **Tooltip for range-slider**:
 
-![](docs/images/sc-slider--tooltip-range.png)
+![](images/sc-slider--tooltip-range.png)
 
-### Limitations
+## Limitations
 
 The current version of `sc-slider`
 

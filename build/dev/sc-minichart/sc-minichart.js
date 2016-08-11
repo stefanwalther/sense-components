@@ -5,7 +5,7 @@ define( [
 		'./wiUtils',
 
 		// no return value
-		'./jquery.sparkline.min'
+		'./external/jquery-sparkline/jquery.sparkline.min'
 	],
 	function ( angular, _, wiUtils ) {
 		"use strict";
@@ -21,7 +21,7 @@ define( [
 			replace: true,
 			scope: false, // we don't need a scope in this directive
 			template: '<div></div>',
-			link: function ( scope, elem, attrs ) {
+			link: function ( scope, element, attrs ) {
 
 
 				//Todo: As soon as Angular 1.3 is available in Qlik Sense $watchGroup could be used ...
@@ -126,13 +126,14 @@ define( [
 					// Getting the data
 					var data;
 					if ( attrs.data ) {
+						// Todo deal with white-spaces
 						data = attrs.data.split( ',' );
 					}
 
 					// Default values to make the experience even better
 					if ( wiUtils.isBlank( attrs.type ) ) { attrs.type = 'bar'; }
 
-					elem.sparkline( data, {
+					element.sparkline( data, {
 
 						// Common Options
 						type: attrs.type,
@@ -208,11 +209,11 @@ define( [
 						maxValue: attrs.maxValue,
 
 						// Shared Usage:
-						negBarColor: attrs.negBarColor,    	// Bar Chart, Tristate Chart
-						barWidth: attrs.barWidth,          	// Bar Chart, Tristate chart
-						barSpacing: attrs.barSpacing,      	// Bar Chart, Tristate chart
+						negBarColor: attrs.negBarColor,    		// Bar Chart, Tristate Chart
+						barWidth: attrs.barWidth,          		// Bar Chart, Tristate chart
+						barSpacing: attrs.barSpacing,      		// Bar Chart, Tristate chart
 						colorMap: attrs.colorMap,           	// Bar Chart, Tristate chart
-						targetColor: attrs.targetColor,    	// Bullet Graphs, Box Plot
+						targetColor: attrs.targetColor,    		// Bullet Graphs, Box Plot
 						spotRadius: attrs.spotRadius      		// Line Chart, Box Plots
 
 					} );
@@ -220,7 +221,7 @@ define( [
 					// Additional options
 					// Didn't want to change the jQuery plugin, this way makes it easier to
 					// update the plugin ...
-					var $can = elem.find( ':first-child' );
+					var $can = element.find( ':first-child' );
 					if ( attrs.opacity ) { $can.css( 'opacity', attrs.opacity ); }
 
 				};

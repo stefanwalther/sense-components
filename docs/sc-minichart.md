@@ -13,7 +13,7 @@
 ```
 
 results into 
-![](docs/images/sc-minichart--default.png)
+![](images/sc-minichart--default.png)
 
 ### Usage
 `sc-minichart` can be either used as an element or as an attribute:
@@ -119,7 +119,7 @@ Ideal to be used in the background of tiles, etc.
 	</sc-minichart>
 
 Results into:  
-![](dos/images/sc-miniChart--bar-advanced.png)
+![](images/sc-miniChart--bar-advanced.png)
 
 
 ### Tristate Chart Options
