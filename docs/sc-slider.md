@@ -31,6 +31,8 @@ General properties:
 - **`hideLabel`** *{boolean}* - Hide the label. *(Default: `false`)*
 - **`tooltips`** *{boolean}* - Whether to show tooltips or not. *(Default: `false`)*
 - **`step`** *{number}* - By default, the slider slides fluently. In order to make the handles jump between intervals, you can use this option. *(Default: 1)*
+- **`orientation`** *{string}* - Orientation of the slider. Either `horizontal` or `vertical`. *(Default: `horizontal`)*
+
 
 Properties for type `single`:  
 

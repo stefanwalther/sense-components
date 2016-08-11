@@ -377,6 +377,8 @@ General properties:
 
 * **`step`** _{number}_ - By default, the slider slides fluently. In order to make the handles jump between intervals, you can use this option. _(Default: 1)_
 
+* **`orientation`** _{string}_ - Orientation of the slider. Either `horizontal` or `vertical`. _(Default: `horizontal`)_
+
 Properties for type `single`:
 
 * **`start`** _{number}_ - The start position for the handle (if using type `single`). _(Default: ?)_
