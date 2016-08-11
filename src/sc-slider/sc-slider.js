@@ -53,7 +53,6 @@ define( [
 				$scope.start = ($scope.start) ? $scope.start : Math.ceil( $scope.max / 2 );
 				$scope.startLower = ($scope.startLower) ? $scope.startLower : $scope.min;
 				$scope.startUpper = ($scope.startUpper) ? $scope.startUpper : $scope.max;
-				$scope.orientation = (['horizontal', 'vertical'].indexOf( $scope.orientation ) > -1) ? $scope.orientation : 'horizontal';
 			},
 			link: function ( scope, element, attrs ) {
 
@@ -210,8 +209,6 @@ define( [
 				 */
 				function initLocalOpts () {
 
-					console.log( 'opts.step', scope.step );
-
 					opts = {
 						type: sliderType,
 						min: angular.isDefined( scope.min ) ? scope.min : 0,
@@ -221,7 +218,7 @@ define( [
 						startUpper: scope.startUpper,
 						qsVarLower: (sliderType === 'single') ? scope.qsVar : scope.qsVarLower,
 						qsVarUpper: scope.qsVarUpper,
-						orientation: scope.orientation,
+						orientation: (['horizontal', 'vertical'].indexOf( scope.orientation ) > -1) ? scope.orientation : 'horizontal',
 						direction: (['ltr', 'rtl'].indexOf( scope.direction ) > -1) ? scope.direction : 'ltr',
 						tooltips: scope.tooltips,
 						initFromQs: true // todo: make that dynamic
