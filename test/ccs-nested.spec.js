@@ -3,13 +3,8 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 
 	describe( "Sense nested component", function () {
 		var qapp,
-			$rootScope,
 			$testScope,
-			$injector,
-			$compile,
 			element;
-
-		// $parentScope = qapp.$rootScope.$new( true );
 
 		beforeEach( function () {
 			qapp = angular.module( 'qapp', [] );
