@@ -51,7 +51,6 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 		it( "should be able to du stuff", function () {
 			var c = element.html();
 			expect( c ).to.contain( 'i am a outer' );
-			expect( c ).to.contain( 'i am a outer' );
 		} );
 	} );
 } );
