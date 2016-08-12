@@ -1,7 +1,7 @@
 {
   "name": "sense-components",
   "description": "Components to be used (in Widgets) in Qlik Sense.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/stefanwalther/sense-components",
   "author": "Stefan Walther (https://github.com/stefanwalther)",
   "repository": "stefanwalther/sense-components",
