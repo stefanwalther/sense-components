@@ -13,7 +13,8 @@ var require = requirejs.config( {
 		"underscore": "node_modules/underscore/underscore-min",
 		"text": "node_modules/text/text",
 		"lib": "test/lib",
-		"src": "build/dev"
+		"src": "build/dev",
+		"qlik": "test/lib/qlik.stub"
 	},
 	shim: {
 		angular: {
@@ -21,21 +22,6 @@ var require = requirejs.config( {
 		},
 		angularMocks: {
 			deps: ['angular']
-		},
-		css: {
-			exports: 'css'
-		},
-		jquery: {
-			exports: 'jquery'
-		},
-		underscore: {
-			exports: "underscore"
-		},
-		text: {
-			exports: 'text'
-		},
-		lib: {
-			exports: "lib"
 		}
 	},
 	deps: tests,
