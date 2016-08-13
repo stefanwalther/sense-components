@@ -13,6 +13,7 @@ define( [
 	 * <sc-alert closable="true" auto-close-after="10">This is the alert message</sc-alert>
 	 * ```
 	 *
+	 * @todo Remove dependency from Leonardo-UI
 	 *
 	 * @param {boolean} `closable` - Whether the alert should be closable or not.
 	 * @param {number} `autoCloseAfter` - If defined and greater than zero, the alert automatically hides after the
@@ -32,16 +33,17 @@ define( [
 			autoCloseAfter: "=",
 			type: "@"
 		},
-		controller: ['$scope', '$element', function ( $scope, $element ) {
-			$scope.onClose = function () {
-				$element.remove();
+		controller: ['$scope', '$element', '$timeout', function ( $scope, $element, $timeout ) {
+
+			$scope.alertVisible = true;
+			$scope.onClose = function() {
+				$scope.alertVisible = false;
 			};
-		}],
-		link: ['$scope', '$element', function ( scope, element ) {
-			if ( scope.autoCloseAfter && _.isNumber( scope.autoCloseAfter ) && scope.autoCloseAfter > 0 ) {
-				setTimeout( function () {
-					scope.onClose();
-				}, parseInt( scope.autoCloseAfter ) );
+
+			if ( $scope.autoCloseAfter && _.isNumber( $scope.autoCloseAfter ) && $scope.autoCloseAfter > 0 ) {
+				$timeout( function () {
+					$scope.alertVisible = false;
+				}, parseInt( $scope.autoCloseAfter ) );
 			}
 		}]
 	};
