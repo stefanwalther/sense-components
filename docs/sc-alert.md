@@ -7,16 +7,16 @@
 ### Usage
 
 ```html
-<sc-alert closable="true" auto-close-after="10">This is the alert message</sc-alert>
 <sc-alert closable="true" design="warning">This is the alert message</sc-alert>
+<sc-alert closable="true" auto-close-after="500">This is the alert message, will be closed after 500ms</sc-alert>
 ```
 
 ### Properties
 
 - **`closable`** *{boolean}* - Whether the alert should be closable or not. *(Default: false)*
-- **`auto-close-after`** *{numeric}* - Define the amount of milliseconds after which the alert should be automatically hidden.
+- **`auto-close-after`** *{number}* - Define the amount of milliseconds after which the alert should be automatically hidden.
 - **`type`** *{string}* - Defines the style of the component using Leonardo UI classes. 
-Possible values: `info`, `success`, `warning`, `danger`
+Possible values: `default` `info`, `success`, `warning`, `danger`
 
 ### Screenshots
 
