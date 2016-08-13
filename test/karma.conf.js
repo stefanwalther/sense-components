@@ -2,7 +2,8 @@
 // Generated on Tue Aug 02 2016 10:17:10 GMT+0200 (W. Europe Summer Time)
 
 module.exports = function ( config ) {
-	config.set( {
+
+	var configuration = {
 
 		basePath: '../',
 		plugins: [
@@ -75,6 +76,20 @@ module.exports = function ( config ) {
 
 		// Concurrency level
 		// how many browser should be started simultaneous
-		concurrency: Infinity
-	} )
+		concurrency: Infinity,
+
+		// Lanuchers for travis
+		customLaunchers: {
+			Chrome_travis_ci: {
+				base: 'Chrome',
+				flags: ['--no-sandbox']
+			}
+		}
+	};
+
+	if (process.env.TRAVIS) {
+		configuration.browsers = ['Chrome_travis_ci'];
+	}
+
+	config.set( configuration )
 };
