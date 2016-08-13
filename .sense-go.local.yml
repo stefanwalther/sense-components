@@ -1,6 +1,6 @@
 deployment:
   toSsh:
-    enabled: true
+    enabled: false
     host: "192.168.56.13"
     port: 22
     username: "stefanwalther"
@@ -13,7 +13,7 @@ deployment:
     extensionDirOverride: ""
 import:
   fromSsh:
-    enabled: true
+    enabled: false
     host: "192.168.56.13"
     port: 22
     username: "stefanwalther"
@@ -22,7 +22,7 @@ import:
       - src: "/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Apps/Test-App.qvf"
         dest: "./examples/sense-components-samples"
 shell:
-  enabled: true
+  enabled: false
   tasks:
   - "rsync -ssh --delete -rtuv stefanwalther@192.168.56.13:/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/sense-components-samples ~/git/stefanwalther/sense-components/examples"
   - "rsync -ssh --delete -rtuv stefanwalther@192.168.56.13:/cygdrive/c/Users/stefanwalther/Documents/Qlik/Sense/Extensions/components ~/git/stefanwalther/sense-components/examples"

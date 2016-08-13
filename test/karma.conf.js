@@ -23,9 +23,9 @@ module.exports = function ( config ) {
 		// list of files / patterns to load in the browser
 		files: [
 			"test/requirejs-config.js",
-			{pattern: 'src/**/*.js', included: false},
-			{pattern: 'src/**/*.css', included: false},
-			{pattern: 'src/**/*.html', included: false},
+			{pattern: 'build/dev/**/*.js', included: false},
+			{pattern: 'build/dev/**/*.css', included: false},
+			{pattern: 'build/dev/**/*.html', included: false},
 			{pattern: 'external/**/*.js', included: false},
 			{pattern: 'test/**/*.js', included: false},
 			{pattern: 'node_modules/angular/*.js', included: false},
@@ -42,7 +42,7 @@ module.exports = function ( config ) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'src/**/*.js': ['coverage']
+			'build/dev/**/*.js': ['coverage']
 		},
 
 		// test results reporter to use

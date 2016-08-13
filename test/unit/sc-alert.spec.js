@@ -36,8 +36,5 @@ define( [
 		it( 'element should be an element', function () {
 			expect( element ).to.exist;
 		} );
-
-
-
 	} );
 } );
