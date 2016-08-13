@@ -4,8 +4,7 @@
 module.exports = function ( config ) {
 	config.set( {
 
-		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: '',
+		basePath: '../',
 		plugins: [
 			"karma-requirejs",
 			"karma-mocha",
@@ -22,8 +21,15 @@ module.exports = function ( config ) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			"main.cfg.js",
+			"test/requirejs-config.js",
 			{pattern: 'src/**/*.js', included: false},
+			{pattern: 'node_modules/angular/*.js', included: false},
+			{pattern: 'node_modules/angular-mocks/*.js', included: false},
+			{pattern: 'node_modules/require-css/*.js', included: false},
+			{pattern: 'node_modules/text/*.js', included: false},
+			{pattern: 'node_modules/underscore/*.js', included: false},
+			{pattern: 'src/**/*.css', included: false},
+			{pattern: 'src/**/*.html', included: false},
 			{pattern: 'external/**/*.js', included: false},
 			{pattern: 'test/**/*.js', included: false}
 			// { pattern: "test/**/*", watched: false, included: false, nocache: true }

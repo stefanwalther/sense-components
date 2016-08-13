@@ -1,7 +1,7 @@
 'use strict';
 define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( angular, sceNested ) {
 
-	describe( "Sense nested component", function () {
+	describe.only( "sce-nested", function () {
 		var qapp,
 			$testScope,
 			element;
@@ -11,7 +11,15 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 		} );
 
 		beforeEach( module( 'qapp', function ( $compileProvider ) {
-			sceNested.forEach( function ( component ) {
+			var directives = [];
+			if (Array.isArray(sceNested)) {
+				sceNested.forEach( function( directive) {
+					directives.push(directive);
+				})
+			} else {
+				directives.push(sceNested);
+			}
+			directives.forEach( function ( component ) {
 				$compileProvider.directive( component.name, function () { return component;} );
 			} );
 		} ) );
@@ -44,8 +52,9 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 		} );
 
 		it( "should be able to du stuff", function () {
+			console.log(element);
 			var c = element.html();
-			expect( c ).to.contain( 'i am a outer' );
+			expect( c ).to.contain( 'I am the outer' );
 		} );
 	} );
 } );

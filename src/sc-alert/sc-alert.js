@@ -1,9 +1,8 @@
 define( [
-	"jquery",
 	"underscore",
 	"text!./sc-alert.ng.html",
 	"css!./sc-alert.css"
-], function ( $, _, template ) {
+], function ( _, template ) {
 	'use strict';
 
 	/**
@@ -33,16 +32,17 @@ define( [
 			autoCloseAfter: "=",
 			type: "@"
 		},
+		controller: ['$scope', '$element', function( $scope, $element) {
+			$scope.onClose = function () {
+				$element.remove();
+			};
+		}],
 		link: function ( scope, element ) {
 			if ( scope.autoCloseAfter && _.isNumber(scope.autoCloseAfter) && scope.autoCloseAfter > 0 ) {
 				setTimeout( function () {
 					scope.onClose();
 				}, parseInt(scope.autoCloseAfter) );
 			}
-
-			scope.onClose = function () {
-				element.remove();
-			};
 		}
 	};
 } );
