@@ -25,6 +25,7 @@ module.exports = function ( config ) {
 			{pattern: 'src/**/*.js', included: false},
 			{pattern: 'node_modules/angular/*.js', included: false},
 			{pattern: 'node_modules/angular-mocks/*.js', included: false},
+			//{pattern: 'node_modules/jquery/dist/*.js', included: false},
 			{pattern: 'node_modules/require-css/*.js', included: false},
 			{pattern: 'node_modules/text/*.js', included: false},
 			{pattern: 'node_modules/underscore/*.js', included: false},

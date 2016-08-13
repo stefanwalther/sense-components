@@ -148,11 +148,12 @@ define( [
 				function slider_ChangeHandler ( values, handle ) {
 					console.log( 'new values', values );
 					ensureApp()
-						.then( varUtils.updateEngineVars.bind( null, app, getVarDefs() ) )
+						.then( varUtils.updateEngineVars.bind( null, app, getVarDefs( values ) ) )
 						.catch( function ( err ) {
 							window.console.error( 'initSlider: ', err ); //Todo: Could be a errorHandler we use everywhere
 						} )
 				}
+
 
 				function slider_UpdateHandler ( values, handle ) {
 					setLabel( values );
