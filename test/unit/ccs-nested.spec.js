@@ -1,7 +1,13 @@
 'use strict';
-define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( angular, sceNested ) {
 
-	describe.only( "sce-nested", function () {
+define( [
+	"angular",
+	"src/sce-nested/sce-nested",
+	"angularMocks",
+	"lib/utils"
+], function ( angular, sceNested, ngMocks, testUtils ) {
+
+	describe( "sce-nested", function () {
 		var qapp,
 			$testScope,
 			element;
@@ -10,18 +16,8 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 			qapp = angular.module( 'qapp', [] );
 		} );
 
-		beforeEach( module( 'qapp', function ( $compileProvider ) {
-			var directives = [];
-			if (Array.isArray(sceNested)) {
-				sceNested.forEach( function( directive) {
-					directives.push(directive);
-				})
-			} else {
-				directives.push(sceNested);
-			}
-			directives.forEach( function ( component ) {
-				$compileProvider.directive( component.name, function () { return component;} );
-			} );
+		beforeEach( module( 'qapp', function ( _$compileProvider_ ) {
+			testUtils.addDirectives( _$compileProvider_, sceNested);
 		} ) );
 
 		beforeEach( inject( function ( _$rootScope_, _$compile_ ) {
@@ -37,10 +33,11 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 
 		} );
 
-		it( 'just a chai test', function () {
-			expect( 'foo' ).to.not.contain( 'bar' );
-			expect( 'foo' ).to.contain( 'foo' );
-		} );
+		it('testUtils is a function', function() {
+			expect(testUtils).not.to.be.undefined;
+			expect(testUtils).to.have.a.property('addDirectives');
+
+		});
 
 		it( 'qapp is an object and has two directives', function () {
 			expect( qapp ).to.be.an.object;
@@ -52,7 +49,6 @@ define( ["angular", "src/sce-nested/sce-nested", "angularMocks"], function ( ang
 		} );
 
 		it( "should be able to du stuff", function () {
-			console.log(element);
 			var c = element.html();
 			expect( c ).to.contain( 'I am the outer' );
 		} );

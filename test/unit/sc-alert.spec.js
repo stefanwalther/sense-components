@@ -1,7 +1,12 @@
 'use strict';
-define( ["angular", "src/sc-alert/sc-alert", "angularMocks"], function ( angular, scAlert ) {
+define( [
+	"angular",
+	"src/sc-alert/sc-alert",
+	"lib/utils",
+	"angularMocks"
+], function ( angular, scAlert, testUtils ) {
 
-	describe.only( "sc-alert", function () {
+	describe( "sc-alert", function () {
 		var qapp,
 			$testScope,
 			element;
@@ -10,18 +15,8 @@ define( ["angular", "src/sc-alert/sc-alert", "angularMocks"], function ( angular
 			qapp = angular.module( 'qapp', [] );
 		} );
 
-		beforeEach( module( 'qapp', function ( $compileProvider ) {
-			var directives = [];
-			if (Array.isArray(scAlert)) {
-				scAlert.forEach( function( directive) {
-					directives.push(directive);
-				})
-			} else {
-				directives.push(scAlert);
-			}
-			directives.forEach( function ( component ) {
-				$compileProvider.directive( component.name, function () { return component;} );
-			} );
+		beforeEach( module( 'qapp', function ( _$compileProvider_ ) {
+			testUtils.addDirectives( _$compileProvider_, scAlert);
 		} ) );
 
 		beforeEach( inject( function ( _$rootScope_, _$compile_ ) {

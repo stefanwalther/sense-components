@@ -9,10 +9,10 @@ var require = requirejs.config( {
 		"angular": "node_modules/angular/angular.min",
 		"angularMocks": "node_modules/angular-mocks/angular-mocks",
 		"css": "node_modules/require-css/css.min",
-		//"jquery": "node_modules/jquery/dist/jquery.min",
+		"jquery": "node_modules/jquery/dist/jquery.min",
 		"underscore": "node_modules/underscore/underscore-min",
-		"text": "node_modules/text/text"
-		// "sinon": "test/libs/sinon/sinon"
+		"text": "node_modules/text/text",
+		"lib": "test/lib"
 	},
 	shim: {
 		angular: {
@@ -21,17 +21,20 @@ var require = requirejs.config( {
 		angularMocks: {
 			deps: ['angular']
 		},
+		css: {
+			exports: 'css'
+		},
+		jquery: {
+			exports: 'jquery'
+		},
 		underscore: {
 			exports: "underscore"
 		},
 		text: {
 			exports: 'text'
 		},
-		css: {
-			exports: 'css'
-		},
-		jquery: {
-			exports: 'jquery'
+		lib: {
+			exports: "lib"
 		}
 	},
 	deps: tests,
