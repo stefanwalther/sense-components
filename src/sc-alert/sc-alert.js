@@ -32,17 +32,17 @@ define( [
 			autoCloseAfter: "=",
 			type: "@"
 		},
-		controller: ['$scope', '$element', function( $scope, $element) {
+		controller: ['$scope', '$element', function ( $scope, $element ) {
 			$scope.onClose = function () {
 				$element.remove();
 			};
 		}],
-		link: function ( scope, element ) {
-			if ( scope.autoCloseAfter && _.isNumber(scope.autoCloseAfter) && scope.autoCloseAfter > 0 ) {
+		link: ['$scope', '$element', function ( scope, element ) {
+			if ( scope.autoCloseAfter && _.isNumber( scope.autoCloseAfter ) && scope.autoCloseAfter > 0 ) {
 				setTimeout( function () {
 					scope.onClose();
-				}, parseInt(scope.autoCloseAfter) );
+				}, parseInt( scope.autoCloseAfter ) );
 			}
-		}
+		}]
 	};
 } );

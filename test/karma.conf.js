@@ -24,16 +24,16 @@ module.exports = function ( config ) {
 		files: [
 			"test/requirejs-config.js",
 			{pattern: 'src/**/*.js', included: false},
+			{pattern: 'src/**/*.css', included: false},
+			{pattern: 'src/**/*.html', included: false},
+			{pattern: 'external/**/*.js', included: false},
+			{pattern: 'test/**/*.js', included: false},
 			{pattern: 'node_modules/angular/*.js', included: false},
 			{pattern: 'node_modules/angular-mocks/*.js', included: false},
 			{pattern: 'node_modules/jquery/dist/*.js', included: false},
 			{pattern: 'node_modules/require-css/*.js', included: false},
 			{pattern: 'node_modules/text/*.js', included: false},
-			{pattern: 'node_modules/underscore/*.js', included: false},
-			{pattern: 'src/**/*.css', included: false},
-			{pattern: 'src/**/*.html', included: false},
-			{pattern: 'external/**/*.js', included: false},
-			{pattern: 'test/**/*.js', included: false}
+			{pattern: 'node_modules/underscore/*.js', included: false}
 		],
 
 		// list of files to exclude
@@ -41,16 +41,17 @@ module.exports = function ( config ) {
 
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-		preprocessors: {},
+		preprocessors: {
+			'src/**/*.js': ['coverage']
+		},
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['mocha'],
+		reporters: ['mocha', 'coverage'],
 		mochaReporter: {
 			output: "minimal"
 		},
-		logLevel: "INFO",
 
 		// web server port
 		port: 9876,
@@ -60,7 +61,7 @@ module.exports = function ( config ) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		logLevel: config.LOG_DEBUG,
 
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch: true,
@@ -83,10 +84,19 @@ module.exports = function ( config ) {
 				base: 'Chrome',
 				flags: ['--no-sandbox']
 			}
+		},
+		coverageReporter: {
+			reporters: [
+				{
+					dir: 'coverage/html',
+					type: 'html'
+				}
+			]
+
 		}
 	};
 
-	if (process.env.TRAVIS) {
+	if ( process.env.TRAVIS ) {
 		configuration.browsers = ['Chrome_travis_ci'];
 	}
 
