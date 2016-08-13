@@ -1,8 +1,9 @@
-/*global define,qvangular*/
+/*global define*/
 define( [
+		'angular',
 		'qlik'
 	],
-	function ( qlik ) {
+	function ( angular, qlik ) {
 		'use strict';
 
 		var $injector = angular.injector( ['ng'] );
@@ -21,7 +22,7 @@ define( [
 
 			var promises = [];
 			variables.forEach( function ( variable ) {
-				promises.push( loadVariable( app, variable) );
+				promises.push( loadVariable( app, variable ) );
 			} );
 
 			return $q.all( promises );
@@ -44,19 +45,19 @@ define( [
 		 * @returns {Promise<VariableResult,Error>} Returns a promise containing an array of {@link VariableResult} if resolved,
 		 * or an Error if rejected.
 		 */
-		function loadVariable( app, varName ) {
+		function loadVariable ( app, varName ) {
 			var defer = $q.defer();
 			app.variable.getContent( varName.trim() )
-				.then( function( reply) {
+				.then( function ( reply ) {
 					var r = {
 						varName: varName,
 						qContent: reply.qContent
 					};
-					defer.resolve(r);
-				})
-				.catch( function ( err) {
-					defer.reject( err);
-				});
+					defer.resolve( r );
+				} )
+				.catch( function ( err ) {
+					defer.reject( err );
+				} );
 			return defer.promise;
 		}
 
