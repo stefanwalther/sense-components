@@ -15,7 +15,8 @@
     "repository": "stefanwalther/sense-components",
     "scripts": {
         "build": "sense-go build",
-        "test": "sense-go build && karma start test/karma.conf.js",
+        "sleep": "sleep 0.5",
+        "test": "sense-go build && sleep 0.5 && karma start test/karma.conf.js",
         "preinstall": "npm list sense-go -g || npm install sense-go -g"
     },
     "dependencies": {},
