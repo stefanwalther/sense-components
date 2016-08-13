@@ -39,6 +39,7 @@
     "nouislider": "github:leongersen/noUiSlider",
     "require-css": "^0.1.8",
     "requirejs": "^2.2.0",
+    "text": "github:requirejs/text",
     "underscore": "^1.7.0",
     "wnumb": "github:leongersen/wnumb"
   },
