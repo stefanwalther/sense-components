@@ -1,9 +1,13 @@
 /*global define*/
+/**
+ * @todo Break out to sense-extension-utils
+ */
 define( [
 		'angular',
-		'qlik'
+		'qlik',
+		'underscore'
 	],
-	function ( angular, qlik ) {
+	function ( angular, qlik, _ ) {
 		'use strict';
 
 		var $injector = angular.injector( ['ng'] );
@@ -18,12 +22,14 @@ define( [
 		function loadVariables ( delimitedVars ) {
 
 			var app = qlik.currApp();
-			var variables = delimitedVars.split( ',' );
-
 			var promises = [];
-			variables.forEach( function ( variable ) {
-				promises.push( loadVariable( app, variable ) );
-			} );
+
+			if ( !_.isEmpty( delimitedVars ) ) {
+				var variables = delimitedVars.split( ',' );
+				variables.forEach( function ( variable ) {
+					promises.push( loadVariable( app, variable ) );
+				} );
+			}
 
 			return $q.all( promises );
 		}
