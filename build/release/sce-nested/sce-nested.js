@@ -1,0 +1,2 @@
+/*global define*/
+define([],function(){"use strict";return[{name:"sceNested",restrict:"E",transclude:!0,template:"<div>I am the outer<div ng-transclude></div>(end of outer)</div>",controller:function(){this.addItem=function(val){}}},{name:"sceNestedItem",restrict:"E",require:"^sceNested",template:'<div style="margin-left:30px;">I am a inner</div>',link:function(scope,elem,attr,outerCtrl){outerCtrl.addItem(1)}}]});
