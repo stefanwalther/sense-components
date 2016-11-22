@@ -53,10 +53,10 @@ Properties for type `range`:
 
 ### Tooltips
 
-You can enable tooltips for the single- and the range-slider (turned off by default):
+You can enable tooltips for the single- and the range-slider (turned off by default).
 
-```html q
-	<sc-slider tooltip="true" />
+```html
+	<sc-slider tooltips="true" />
 ```
 
 
@@ -73,3 +73,4 @@ You can enable tooltips for the single- and the range-slider (turned off by defa
 The current version of `sc-slider`
 
 - Does not accept decimal places, it will always ceil any input.
+- Double-binding of variables not implemented, yet.

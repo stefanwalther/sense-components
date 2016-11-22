@@ -20,4 +20,4 @@ Possible values: `default` `info`, `success`, `warning`, `danger`
 
 ### Screenshots
 
-![](images/qw-alert--screenshot.png)
+![](images/sc-alert--screenshot.png)
