@@ -4,3 +4,4 @@ coverage
 
 .sense-go.local.yml
 .idea
+.vscode
