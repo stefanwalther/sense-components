@@ -1,5 +1,8 @@
 # sense-components
 
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4a97ff74a2ac4fc8a8147902a020da6b)](https://www.codacy.com/app/stefan-walther/sense-components?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=stefanwalther/sense-components&amp;utm_campaign=badger)
+
 > Components to be used (in Widgets) in Qlik Sense.
 
 ## Components
