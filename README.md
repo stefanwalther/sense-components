@@ -1,5 +1,7 @@
 # sense-components
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/stefanwalther/sense-components.svg)](https://greenkeeper.io/)
+
 > Components to be used (in Widgets) in Qlik Sense.
 
 ## Components
